@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+/* Font Faces */
+@font-face {
+  font-family: "Straight";
+  src:
+    url("./assets/fonts/regular-straight.woff2") format("woff2"),
+    url("./assets/fonts/regular-straight.woff") format("woff"),
+    url("./assets/fonts/regular-straight.eot") format("embedded-opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Straight";
+  src:
+    url("./assets/fonts/bold-straight.woff2") format("woff2"),
+    url("./assets/fonts/bold-straight.woff") format("woff"),
+    url("./assets/fonts/bold-straight.eot") format("embedded-opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Straight";
+  src:
+    url("./assets/fonts/solid-straight.woff2") format("woff2"),
+    url("./assets/fonts/solid-straight.woff") format("woff"),
+    url("./assets/fonts/solid-straight.eot") format("embedded-opentype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("./assets/fonts/space-grotesk.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-family-straight: "Straight", sans-serif;
+  --font-family-space: "Space Grotesk", sans-serif;
+
+  --font-sans: var(--font-family-straight);
+}

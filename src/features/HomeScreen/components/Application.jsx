@@ -3,18 +3,17 @@ import { cn } from "@/shared/utils/cn.js";
 
 // Application Icon Variants
 const applicationIconVariants = cva(
-  "flex justify-center items-center bg-[#14151A] border border-white/10 transition-all",
+  "flex justify-center items-center border border-white/10 transition-all",
   {
     variants: {
       size: {
-        normal:
-          "w-[50px] h-[50px] rounded-[15px] shadow-[0px_7px_20px_0px_#FFFFFF1A_inset,0px_-9px_20px_0px_#0000004D_inset]",
-        dock: "w-[50px] h-[50px] rounded-[15px]",
+        normal: "",
+        dock: "",
       },
       variant: {
-        default: "",
-        widget:
-          "w-full h-full bg-blue-400 rounded-[15px] border border-white/10",
+        default: "bg-[#14151A]",
+        full: "bg-transparent border-0",
+        widget: "w-full h-full bg-blue-400 border border-white/10",
       },
     },
     defaultVariants: {
@@ -26,32 +25,62 @@ const applicationIconVariants = cva(
 
 // Application Icon Component
 export function ApplicationIcon({
-  icon: Icon, // eslint-disable-line no-unused-vars
+  image,
+  imageSize,
   size = "normal",
   variant = "default",
   className,
-  iconClassName,
+  scale = 1,
 }) {
+  const isFull = variant === "full";
+  const baseSize = size === "dock" ? 50 : 50;
+  const borderRadius = 15 * scale;
+  const actualSize = baseSize * scale;
+
   return (
-    <div className={cn(applicationIconVariants({ size, variant }), className)}>
-      <Icon
-        className={cn("text-white", iconClassName)}
-        style={{ width: "27.5px", height: "35.3px" }}
-        strokeWidth={1}
+    <div
+      className={cn(applicationIconVariants({ size, variant }), className)}
+      style={{
+        width: `${actualSize}px`,
+        height: `${actualSize}px`,
+        borderRadius: `${borderRadius}px`,
+        boxShadow:
+          size === "normal" && variant === "default"
+            ? `0px ${7 * scale}px ${20 * scale}px 0px #FFFFFF1A inset, 0px ${-9 * scale}px ${20 * scale}px 0px #0000004D inset`
+            : undefined,
+      }}
+    >
+      <img
+        src={image}
+        alt=""
+        className={cn(isFull ? "w-full h-full object-cover" : "object-contain")}
+        style={
+          !isFull && imageSize
+            ? {
+                width: `${parseFloat(imageSize.width) * scale}px`,
+                height: `${parseFloat(imageSize.height) * scale}px`,
+                marginTop: `${(parseFloat(imageSize.marginTop) || 0) * scale}px`,
+                borderRadius: isFull ? `${borderRadius}px` : undefined,
+              }
+            : !isFull
+              ? { width: `${35 * scale}px`, height: `${35 * scale}px` }
+              : { borderRadius: `${borderRadius}px` }
+        }
       />
     </div>
   );
 }
 
 // Application Name Component
-export function ApplicationName({ name, className }) {
+export function ApplicationName({ name, className, scale = 1 }) {
   return (
     <div
-      className={cn("text-white text-center font-normal mt-[3px]", className)}
+      className={cn("text-white text-center font-normal", className)}
       style={{
-        width: "50px",
-        fontSize: "8px",
-        lineHeight: "10px",
+        width: `${50 * scale}px`,
+        fontSize: `${8 * scale}px`,
+        lineHeight: `${10 * scale}px`,
+        marginTop: `${3 * scale}px`,
         overflow: "visible",
         whiteSpace: "nowrap",
       }}
@@ -62,21 +91,28 @@ export function ApplicationName({ name, className }) {
 }
 
 // Application Widget Component
-export function ApplicationWidget({ app, className }) {
-  const AppIcon = app.icon;
+export function ApplicationWidget({ app, className, scale = 1 }) {
+  const borderRadius = 15 * scale;
 
   return (
     <div
       className={cn(
-        "w-full h-full bg-blue-400 rounded-[15px] border border-white/10 flex justify-center items-center",
+        "w-full h-full border border-white/10 flex justify-center items-center",
         className,
       )}
+      style={{
+        borderRadius: `${borderRadius}px`,
+        background: app.widgetBg || "#3b82f6",
+      }}
     >
-      <AppIcon
-        className="text-white"
-        style={{ width: "27.5px", height: "35.3px" }}
-        strokeWidth={1}
-      />
+      {app.image && (
+        <img
+          src={app.image}
+          alt=""
+          className="object-contain"
+          style={{ width: `${50 * scale}px`, height: `${50 * scale}px` }}
+        />
+      )}
     </div>
   );
 }
@@ -88,9 +124,15 @@ export default function Application({
   showName = true,
   onClick,
   className,
-  iconClassName,
+  scale = 1,
 }) {
   const isWidget = app.isWidget;
+  const baseWidth = isWidget ? parseFloat(app.widgetSize?.width) || 115 : 50;
+  const baseHeight = isWidget
+    ? parseFloat(app.widgetSize?.height) || 115
+    : showName
+      ? 63
+      : 50;
 
   const handleClick = (e) => {
     if (onClick) {
@@ -107,24 +149,22 @@ export default function Application({
         className,
       )}
       style={{
-        width: isWidget ? app.widgetSize?.width || "115px" : "50px",
-        height: isWidget
-          ? app.widgetSize?.height || "115px"
-          : showName
-            ? "63px"
-            : "50px",
+        width: `${baseWidth * scale}px`,
+        height: `${baseHeight * scale}px`,
       }}
     >
       {isWidget ? (
-        <ApplicationWidget app={app} />
+        <ApplicationWidget app={app} scale={scale} />
       ) : (
         <>
           <ApplicationIcon
-            icon={app.icon}
+            image={app.image}
+            imageSize={app.imageSize}
             size={size}
-            className={iconClassName}
+            variant={app.iconVariant || "default"}
+            scale={scale}
           />
-          {showName && <ApplicationName name={app.name} />}
+          {showName && <ApplicationName name={app.name} scale={scale} />}
         </>
       )}
     </div>
@@ -132,8 +172,10 @@ export default function Application({
 }
 
 // Dock Application Component (specialized for dock)
-export function DockApplication({ app, onClick, className }) {
-  const AppIcon = app.icon;
+export function DockApplication({ app, onClick, className, scale = 1 }) {
+  const baseSize = 50;
+  const borderRadius = 15 * scale;
+  const actualSize = baseSize * scale;
 
   return (
     <div
@@ -143,11 +185,26 @@ export function DockApplication({ app, onClick, className }) {
         onClick && "cursor-pointer",
         className,
       )}
+      style={{
+        width: `${actualSize}px`,
+        height: `${actualSize}px`,
+        borderRadius: `${borderRadius}px`,
+        backgroundColor: app.bgColor,
+      }}
     >
-      <AppIcon
-        className="text-green-400"
-        style={{ width: "32px", height: "32px" }}
-        strokeWidth={1.5}
+      <img
+        src={app.image}
+        alt=""
+        className="object-contain"
+        style={
+          app.imageSize
+            ? {
+                width: `${parseFloat(app.imageSize.width) * scale}px`,
+                height: `${parseFloat(app.imageSize.height) * scale}px`,
+                marginTop: `${(parseFloat(app.imageSize.marginTop) || 0) * scale}px`,
+              }
+            : { width: `${35 * scale}px`, height: `${35 * scale}px` }
+        }
       />
     </div>
   );

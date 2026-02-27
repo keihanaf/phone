@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
+import { useOutletContext } from "react-router-dom";
 import DraggableGrid, {
   SortableGrid,
 } from "@/features/HomeScreen/components/DraggableGrid";
@@ -7,28 +8,7 @@ import SortableAppItem from "@/features/HomeScreen/components/SortableAppItem";
 import Application, {
   DockApplication,
 } from "@/features/HomeScreen/components/Application";
-import {
-  CloudSun,
-  Image as ImageIcon,
-  Calendar,
-  Clock,
-  MessageSquare,
-  Store,
-  Wallet,
-  Settings,
-  Music,
-  Calculator,
-  Newspaper,
-  Phone,
-  Camera as CameraIcon,
-  MessageCircle,
-  Mail,
-  Map,
-  Video,
-  Compass,
-} from "lucide-react";
 
-// --- Mock Data ---
 const INITIAL_PAGES = [
   // صفحه اول
   [
@@ -36,53 +16,201 @@ const INITIAL_PAGES = [
       id: "weather-1",
       order: 1,
       name: "Weather",
-      icon: CloudSun,
       colSpan: 2,
       rowSpan: 2,
       isWidget: true,
       widgetSize: { width: "115px", height: "122px" },
+      widgetBg: "linear-gradient(0deg, #017BFF 0%, #5EC6F6 100%)",
     },
-    { id: "photos-2", order: 2, name: "Photos", icon: ImageIcon },
-    { id: "calendar-3", order: 3, name: "Calendar", icon: Calendar },
-    { id: "notes-4", order: 4, name: "Notes", icon: MessageSquare },
-    { id: "clock-5", order: 5, name: "Clock", icon: Clock },
-    { id: "bleeter-6", order: 6, name: "Bleeter", icon: MessageSquare },
-    { id: "fruit-7", order: 7, name: "FruitMarket", icon: Store },
-    { id: "paymate-8", order: 8, name: "PayMate", icon: Wallet },
-    { id: "settings-9", order: 9, name: "Settings", icon: Settings },
-    { id: "yellow-10", order: 10, name: "YellowJack", icon: Store },
-    { id: "garages-11", order: 11, name: "Garages", icon: Store },
-    { id: "dynasty-12", order: 12, name: "Dynasty8", icon: Store },
-    { id: "music-13", order: 13, name: "iFruit Music", icon: Music },
-    { id: "calc-14", order: 14, name: "Calculator", icon: Calculator },
-    { id: "news-15", order: 15, name: "News", icon: Newspaper },
+    {
+      id: "photos-2",
+      order: 2,
+      name: "Photos",
+      image: "/src/assets/icons/gallery.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
+    {
+      id: "calendar-3",
+      order: 3,
+      name: "Calendar",
+      image: "/src/assets/icons/calendar.png",
+      iconVariant: "full",
+    },
+    {
+      id: "notes-4",
+      order: 4,
+      name: "Notes",
+      image: "/src/assets/icons/notes.png",
+      iconVariant: "full",
+    },
+    {
+      id: "clock-5",
+      order: 5,
+      name: "Clock",
+      image: "/src/assets/icons/clock.png",
+      iconVariant: "full",
+    },
+    {
+      id: "bleeter-6",
+      order: 6,
+      name: "Bleeter",
+      image: "/src/assets/icons/bleeter.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
+    {
+      id: "fruit-7",
+      order: 7,
+      name: "FruitMarket",
+      image: "/src/assets/icons/fruitmarket.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
+    {
+      id: "paymate-8",
+      order: 8,
+      name: "PayMate",
+      image: "/src/assets/icons/paymate.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
+    {
+      id: "settings-9",
+      order: 9,
+      name: "Settings",
+      image: "/src/assets/icons/settings.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
+    {
+      id: "yellow-10",
+      order: 10,
+      name: "YellowJack",
+      image: "/src/assets/icons/yellowjack.png",
+    },
+    {
+      id: "garages-11",
+      order: 11,
+      name: "Garages",
+      image: "/src/assets/icons/garages.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
+    {
+      id: "dynasty-12",
+      order: 12,
+      name: "Dynasty8",
+      image: "/src/assets/icons/dynasty8.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
+    {
+      id: "music-13",
+      order: 13,
+      name: "iFruit Music",
+      image: "/src/assets/icons/ifruitmusic.png",
+    },
+    {
+      id: "calc-14",
+      order: 14,
+      name: "Calculator",
+      image: "/src/assets/icons/calculator.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
+    {
+      id: "news-15",
+      order: 15,
+      name: "News",
+      image: "/src/assets/icons/news.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
   ],
   // صفحه دوم
   [
-    { id: "maps-16", order: 16, name: "Maps", icon: Map },
-    { id: "videos-17", order: 17, name: "Videos", icon: Video },
-    { id: "compass-18", order: 18, name: "Compass", icon: Compass },
-    { id: "mail-19", order: 19, name: "Mail", icon: Mail },
-    { id: "camera-20", order: 20, name: "Camera", icon: CameraIcon },
-    { id: "messages-21", order: 21, name: "Messages", icon: MessageCircle },
+    {
+      id: "news-16",
+      order: 16,
+      name: "News",
+      image: "/src/assets/icons/news.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
+    {
+      id: "calc-17",
+      order: 17,
+      name: "Calculator",
+      image: "/src/assets/icons/calculator.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
+    {
+      id: "paymate-18",
+      order: 18,
+      name: "PayMate",
+      image: "/src/assets/icons/paymate.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
+    {
+      id: "clock-19",
+      order: 19,
+      name: "Clock",
+      image: "/src/assets/icons/clock.png",
+      iconVariant: "full",
+    },
+    {
+      id: "music-20",
+      order: 20,
+      name: "iFruit Music",
+      image: "/src/assets/icons/ifruitmusic.png",
+    },
+    {
+      id: "dynasty-21",
+      order: 21,
+      name: "Dynasty8",
+      image: "/src/assets/icons/dynasty8.png",
+      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    },
   ],
 ];
 
 const DOCK_APPS = [
-  { icon: Phone },
-  { icon: CameraIcon },
-  { icon: MessageCircle },
-  { icon: Mail },
+  {
+    image: "/src/assets/icons/phone.png",
+    bgColor: "#34D050",
+  },
+  {
+    image: "/src/assets/icons/camera.png",
+    bgColor: "#B7B7B7",
+    imageSize: { width: "42px", height: "42px", marginTop: "7px" },
+  },
+  {
+    image: "/src/assets/icons/message.png",
+    bgColor: "#34D050",
+  },
+  {
+    image: "/src/assets/icons/email.png",
+    bgColor: "#3491F8",
+    imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+  },
 ];
 
 // --- Main Component ---
 export default function HomeScreenPage() {
+  const { scale = 1 } = useOutletContext();
   const [pages, setPages] = useState(INITIAL_PAGES);
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isEditMode, setIsEditMode] = useState(false);
   const [longPressTimer, setLongPressTimer] = useState(null);
   const containerRef = useRef(null);
+
+  const contentWidth = 265 * scale;
+  const contentHeight = 460 * scale;
+  const containerWidth = 245 * scale;
+  const containerHeight = 428 * scale;
+  const dockWidth = 265 * scale;
+  const dockHeight = 70 * scale;
+  const dockGap = 15 * scale;
+  const dockBorderRadius = 25 * scale;
+  const dockPadding = 10 * scale;
+  const navWidth = 25 * scale;
+  const navHeight = 9 * scale;
+  const navGap = 2 * scale;
+  const navBorderRadius = 9 * scale;
+  const navPaddingV = 3 * scale;
+  const navPaddingH = 5 * scale;
 
   // Long press handler
   const handlePointerDown = () => {
@@ -140,7 +268,7 @@ export default function HomeScreenPage() {
 
   const variants = {
     enter: (direction) => ({
-      x: direction > 0 ? 265 : -265,
+      x: direction > 0 ? contentWidth : -contentWidth,
       opacity: 1,
     }),
     center: {
@@ -148,13 +276,18 @@ export default function HomeScreenPage() {
       opacity: 1,
     },
     exit: (direction) => ({
-      x: direction > 0 ? -265 : 265,
+      x: direction > 0 ? -contentWidth : contentWidth,
       opacity: 1,
     }),
   };
 
   const renderAppItem = (app) => (
-    <SortableAppItem key={app.id} app={app} isEditMode={isEditMode} />
+    <SortableAppItem
+      key={app.id}
+      app={app}
+      isEditMode={isEditMode}
+      scale={scale}
+    />
   );
 
   const renderDragOverlay = (activeId) => {
@@ -163,7 +296,7 @@ export default function HomeScreenPage() {
 
     return (
       <div className="pointer-events-none scale-110 shadow-2xl">
-        <Application app={activeApp} />
+        <Application app={activeApp} scale={scale} />
       </div>
     );
   };
@@ -173,13 +306,13 @@ export default function HomeScreenPage() {
       {/* === Main Content === */}
       <div
         className="flex flex-col justify-between items-center shrink-0 overflow-hidden"
-        style={{ width: "265px", height: "460px" }}
+        style={{ width: `${contentWidth}px`, height: `${contentHeight}px` }}
       >
         <div
           className="relative"
           style={{
-            width: "245px",
-            height: "428px",
+            width: `${containerWidth}px`,
+            height: `${containerHeight}px`,
           }}
           ref={containerRef}
         >
@@ -219,10 +352,10 @@ export default function HomeScreenPage() {
                   renderItem={renderAppItem}
                   gridClassName="grid"
                   gridStyle={{
-                    gridTemplateColumns: "repeat(4, 50px)",
-                    gridTemplateRows: "repeat(6, 56px)",
-                    rowGap: "10px",
-                    columnGap: "15px",
+                    gridTemplateColumns: `repeat(4, ${50 * scale}px)`,
+                    gridTemplateRows: `repeat(6, ${56 * scale}px)`,
+                    rowGap: `${10 * scale}px`,
+                    columnGap: `${15 * scale}px`,
                   }}
                 />
               </Motion.div>
@@ -234,11 +367,11 @@ export default function HomeScreenPage() {
         <div
           className="flex items-center justify-center bg-black/20"
           style={{
-            width: "25px",
-            height: "9px",
-            gap: "2px",
-            borderRadius: "9px",
-            padding: "3px 5px",
+            width: `${navWidth}px`,
+            height: `${navHeight}px`,
+            gap: `${navGap}px`,
+            borderRadius: `${navBorderRadius}px`,
+            padding: `${navPaddingV}px ${navPaddingH}px`,
           }}
         >
           {pages.map((_, index) => (
@@ -246,9 +379,10 @@ export default function HomeScreenPage() {
               key={index}
               className={currentPage === index ? "bg-white" : "bg-white/50"}
               style={{
-                width: currentPage === index ? "10px" : "3px",
-                height: "3px",
-                borderRadius: "3px",
+                width:
+                  currentPage === index ? `${10 * scale}px` : `${3 * scale}px`,
+                height: `${3 * scale}px`,
+                borderRadius: `${3 * scale}px`,
               }}
             />
           ))}
@@ -259,16 +393,16 @@ export default function HomeScreenPage() {
       <div
         className="flex justify-center items-center bg-white/5 backdrop-blur-md shrink-0"
         style={{
-          width: "265px",
-          height: "70px",
-          gap: "15px",
-          borderRadius: "25px",
+          width: `${dockWidth}px`,
+          height: `${dockHeight}px`,
+          gap: `${dockGap}px`,
+          borderRadius: `${dockBorderRadius}px`,
           border: "1px solid #FFFFFF1A",
-          padding: "10px",
+          padding: `${dockPadding}px`,
         }}
       >
         {DOCK_APPS.map((app, index) => (
-          <DockApplication key={`dock-${index}`} app={app} />
+          <DockApplication key={`dock-${index}`} app={app} scale={scale} />
         ))}
       </div>
     </>

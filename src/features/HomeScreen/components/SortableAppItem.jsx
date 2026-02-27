@@ -3,7 +3,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { cn } from "@/shared/utils/cn.js";
 import Application from "@/features/HomeScreen/components/Application";
 
-export default function SortableAppItem({ app, isEditMode }) {
+export default function SortableAppItem({ app, isEditMode, scale = 1 }) {
   const {
     attributes,
     listeners,
@@ -16,11 +16,18 @@ export default function SortableAppItem({ app, isEditMode }) {
     disabled: !isEditMode,
   });
 
+  const baseWidth = app.isWidget
+    ? parseFloat(app.widgetSize?.width) || 115
+    : 50;
+  const baseHeight = app.isWidget
+    ? parseFloat(app.widgetSize?.height) || 115
+    : 63;
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    width: app.isWidget ? app.widgetSize?.width || "115px" : "50px",
-    height: app.isWidget ? app.widgetSize?.height || "115px" : "63px",
+    width: `${baseWidth * scale}px`,
+    height: `${baseHeight * scale}px`,
     gridColumn: app.colSpan ? `span ${app.colSpan}` : "span 1",
     gridRow: app.rowSpan ? `span ${app.rowSpan}` : "span 1",
     opacity: isDragging ? 0 : 1,
@@ -39,7 +46,7 @@ export default function SortableAppItem({ app, isEditMode }) {
         isEditMode && !isDragging && "animate-wiggle",
       )}
     >
-      <Application app={app} />
+      <Application app={app} scale={scale} />
     </div>
   );
 }

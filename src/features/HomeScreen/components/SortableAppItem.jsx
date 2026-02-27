@@ -21,13 +21,16 @@ export default function SortableAppItem({ app, isEditMode, scale = 1 }) {
     : 50;
   const baseHeight = app.isWidget
     ? parseFloat(app.widgetSize?.height) || 115
-    : 63;
+    : 50;
+
+  // Add extra height for name (13px = 3px margin + 10px line height)
+  const totalHeight = baseHeight + 13;
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
     width: `${baseWidth * scale}px`,
-    height: `${baseHeight * scale}px`,
+    height: `${totalHeight * scale}px`,
     gridColumn: app.colSpan ? `span ${app.colSpan}` : "span 1",
     gridRow: app.rowSpan ? `span ${app.rowSpan}` : "span 1",
     opacity: isDragging ? 0 : 1,

@@ -27,7 +27,7 @@ const INITIAL_PAGES = [
       order: 2,
       name: "Photos",
       image: "/src/assets/icons/gallery.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
     {
       id: "calendar-3",
@@ -55,68 +55,70 @@ const INITIAL_PAGES = [
       order: 6,
       name: "Bleeter",
       image: "/src/assets/icons/bleeter.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
     {
       id: "fruit-7",
       order: 7,
       name: "FruitMarket",
       image: "/src/assets/icons/fruitmarket.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
     {
       id: "paymate-8",
       order: 8,
       name: "PayMate",
       image: "/src/assets/icons/paymate.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
     {
       id: "settings-9",
       order: 9,
       name: "Settings",
       image: "/src/assets/icons/settings.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
     {
       id: "yellow-10",
       order: 10,
       name: "YellowJack",
       image: "/src/assets/icons/yellowjack.png",
+      iconVariant: "full",
     },
     {
       id: "garages-11",
       order: 11,
       name: "Garages",
       image: "/src/assets/icons/garages.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
     {
       id: "dynasty-12",
       order: 12,
       name: "Dynasty8",
       image: "/src/assets/icons/dynasty8.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
     {
       id: "music-13",
       order: 13,
       name: "iFruit Music",
       image: "/src/assets/icons/ifruitmusic.png",
+      iconVariant: "full",
     },
     {
       id: "calc-14",
       order: 14,
       name: "Calculator",
       image: "/src/assets/icons/calculator.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
     {
       id: "news-15",
       order: 15,
       name: "News",
       image: "/src/assets/icons/news.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
   ],
   // صفحه دوم
@@ -126,21 +128,21 @@ const INITIAL_PAGES = [
       order: 16,
       name: "News",
       image: "/src/assets/icons/news.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
     {
       id: "calc-17",
       order: 17,
       name: "Calculator",
       image: "/src/assets/icons/calculator.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
     {
       id: "paymate-18",
       order: 18,
       name: "PayMate",
       image: "/src/assets/icons/paymate.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
     {
       id: "clock-19",
@@ -154,13 +156,14 @@ const INITIAL_PAGES = [
       order: 20,
       name: "iFruit Music",
       image: "/src/assets/icons/ifruitmusic.png",
+      iconVariant: "full",
     },
     {
       id: "dynasty-21",
       order: 21,
       name: "Dynasty8",
       image: "/src/assets/icons/dynasty8.png",
-      imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+      iconVariant: "full",
     },
   ],
 ];
@@ -168,20 +171,19 @@ const INITIAL_PAGES = [
 const DOCK_APPS = [
   {
     image: "/src/assets/icons/phone.png",
-    bgColor: "#34D050",
+    iconVariant: "full",
   },
   {
     image: "/src/assets/icons/camera.png",
-    bgColor: "#B7B7B7",
-    imageSize: { width: "42px", height: "42px", marginTop: "7px" },
+    iconVariant: "full",
   },
   {
     image: "/src/assets/icons/message.png",
-    bgColor: "#34D050",
+    iconVariant: "full",
   },
   {
     image: "/src/assets/icons/email.png",
-    bgColor: "#3491F8",
+    iconVariant: "full",
     imageSize: { width: "40px", height: "40px", marginTop: "7px" },
   },
 ];
@@ -353,7 +355,7 @@ export default function HomeScreenPage() {
                   gridClassName="grid"
                   gridStyle={{
                     gridTemplateColumns: `repeat(4, ${50 * scale}px)`,
-                    gridTemplateRows: `repeat(6, ${56 * scale}px)`,
+                    gridTemplateRows: `repeat(6, ${63 * scale}px)`,
                     rowGap: `${10 * scale}px`,
                     columnGap: `${15 * scale}px`,
                   }}
@@ -383,6 +385,7 @@ export default function HomeScreenPage() {
                   currentPage === index ? `${10 * scale}px` : `${3 * scale}px`,
                 height: `${3 * scale}px`,
                 borderRadius: `${3 * scale}px`,
+                transition: "all 0.3s ease",
               }}
             />
           ))}

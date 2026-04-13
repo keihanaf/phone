@@ -1,39 +1,41 @@
-import { cva } from "class-variance-authority";
-import { cn } from "@/shared/utils/cn.js";
+import { useEffect, useRef } from 'react';
+import { cva } from 'class-variance-authority';
+import { cn } from '@/shared/utils/cn.js';
+import { useAppLauncher } from '@/shared/context/AppLauncherContext.jsx';
 
 // Application Icon Variants
 const applicationIconVariants = cva(
-  "flex justify-center items-center border border-white/10 transition-all",
+  'flex justify-center items-center border border-border transition-all',
   {
     variants: {
       size: {
-        normal: "",
-        dock: "",
+        normal: '',
+        dock: '',
       },
       variant: {
-        default: "bg-[#14151A]",
-        full: "bg-transparent border-0",
-        widget: "w-full h-full bg-blue-400 border border-white/10",
+        default: 'bg-item-hover',
+        full: 'bg-transparent border-0',
+        widget: 'w-full h-full bg-blue-400 border border-border',
       },
     },
     defaultVariants: {
-      size: "normal",
-      variant: "default",
+      size: 'normal',
+      variant: 'default',
     },
-  },
+  }
 );
 
 // Application Icon Component
 export function ApplicationIcon({
   image,
   imageSize,
-  size = "normal",
-  variant = "default",
+  size = 'normal',
+  variant = 'default',
   className,
   scale = 1,
 }) {
-  const isFull = variant === "full";
-  const baseSize = size === "dock" ? 50 : 50;
+  const isFull = variant === 'full';
+  const baseSize = size === 'dock' ? 50 : 50;
   const borderRadius = 15 * scale;
   const actualSize = baseSize * scale;
 
@@ -45,7 +47,7 @@ export function ApplicationIcon({
         height: `${actualSize}px`,
         borderRadius: `${borderRadius}px`,
         boxShadow:
-          size === "normal" && variant === "default"
+          size === 'normal' && variant === 'default'
             ? `0px ${7 * scale}px ${20 * scale}px 0px #FFFFFF1A inset, 0px ${-9 * scale}px ${20 * scale}px 0px #0000004D inset`
             : undefined,
       }}
@@ -53,7 +55,7 @@ export function ApplicationIcon({
       <img
         src={image}
         alt=""
-        className={cn(isFull ? "w-full h-full object-cover" : "object-contain")}
+        className={cn(isFull ? 'w-full h-full object-cover' : 'object-contain')}
         style={
           !isFull && imageSize
             ? {
@@ -80,14 +82,14 @@ export function ApplicationName({
 }) {
   return (
     <div
-      className={cn("text-white text-center font-normal", className)}
+      className={cn('text-white text-center font-normal', className)}
       style={{
         width: isWidget ? `${115 * scale}px` : `${50 * scale}px`,
         fontSize: `${8 * scale}px`,
         lineHeight: `${10 * scale}px`,
         marginTop: `${3 * scale}px`,
-        overflow: "visible",
-        whiteSpace: "nowrap",
+        overflow: 'visible',
+        whiteSpace: 'nowrap',
       }}
     >
       {name}
@@ -102,12 +104,12 @@ export function ApplicationWidget({ app, className, scale = 1 }) {
   return (
     <div
       className={cn(
-        "w-full h-full border border-white/10 flex justify-center items-center",
-        className,
+        'w-full h-full border border-border flex justify-center items-center',
+        className
       )}
       style={{
         borderRadius: `${borderRadius}px`,
-        background: app.widgetBg || "#3b82f6",
+        background: app.widgetBg || '#3b82f6',
       }}
     >
       {app.image && (
@@ -125,7 +127,7 @@ export function ApplicationWidget({ app, className, scale = 1 }) {
 // Main Application Component
 export default function Application({
   app,
-  size = "normal",
+  size = 'normal',
   showName = true,
   onClick,
   className,
@@ -134,8 +136,6 @@ export default function Application({
   const isWidget = app.isWidget;
   const baseWidth = isWidget ? parseFloat(app.widgetSize?.width) || 115 : 50;
   const baseHeight = isWidget ? parseFloat(app.widgetSize?.height) || 115 : 50;
-
-  // Add extra height for name if showName is true (13px = 3px margin + 10px line height)
   const totalHeight = showName ? baseHeight + 13 : baseHeight;
 
   const handleClick = (e) => {
@@ -148,9 +148,9 @@ export default function Application({
     <div
       onClick={handleClick}
       className={cn(
-        "flex flex-col items-center",
-        onClick && "cursor-pointer",
-        className,
+        'flex flex-col items-center',
+        onClick && 'cursor-pointer',
+        className
       )}
       style={{
         width: `${baseWidth * scale}px`,
@@ -170,7 +170,7 @@ export default function Application({
             image={app.image}
             imageSize={app.imageSize}
             size={size}
-            variant={app.iconVariant || "default"}
+            variant={app.iconVariant || 'default'}
             scale={scale}
           />
           {showName && (
@@ -182,23 +182,33 @@ export default function Application({
   );
 }
 
-// Dock Application Component (specialized for dock)
+// Dock Application Component
 export function DockApplication({ app, onClick, className, scale = 1 }) {
   const baseSize = 50;
   const borderRadius = 15 * scale;
   const actualSize = baseSize * scale;
-  const isFull = app.iconVariant === "full";
+  const isFull = app.iconVariant === 'full';
+
+  const { registerIconRef } = useAppLauncher();
+  const iconRef = useRef(null);
+
+  useEffect(() => {
+    if (iconRef.current && app.id) {
+      registerIconRef(app.id, iconRef.current);
+    }
+  }, [app.id, registerIconRef]);
 
   return (
     <div
+      ref={iconRef}
       onClick={onClick}
       className={cn(
         applicationIconVariants({
-          size: "dock",
-          variant: app.iconVariant || "default",
+          size: 'dock',
+          variant: app.iconVariant || 'default',
         }),
-        onClick && "cursor-pointer",
-        className,
+        onClick && 'cursor-pointer',
+        className
       )}
       style={{
         width: `${actualSize}px`,
@@ -210,7 +220,7 @@ export function DockApplication({ app, onClick, className, scale = 1 }) {
       <img
         src={app.image}
         alt=""
-        className={cn(isFull ? "w-full h-full object-cover" : "object-contain")}
+        className={cn(isFull ? 'w-full h-full object-cover' : 'object-contain')}
         style={
           !isFull && app.imageSize
             ? {

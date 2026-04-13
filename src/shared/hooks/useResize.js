@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from 'react';
 
 export function useResize({ baseWidth, baseHeight, maxScale = 1.2 }) {
   const [size, setSize] = useState({ width: baseWidth, height: baseHeight });
@@ -33,14 +33,14 @@ export function useResize({ baseWidth, baseHeight, maxScale = 1.2 }) {
 
       const newWidth = Math.max(
         baseWidth,
-        Math.min(maxWidth, startPosRef.current.width + deltaY),
+        Math.min(maxWidth, startPosRef.current.width + deltaY)
       );
       const newHeight = Math.max(
         baseHeight,
         Math.min(
           maxHeight,
-          startPosRef.current.height + deltaY * (baseHeight / baseWidth),
-        ),
+          startPosRef.current.height + deltaY * (baseHeight / baseWidth)
+        )
       );
 
       setSize({ width: newWidth, height: newHeight });
@@ -50,12 +50,12 @@ export function useResize({ baseWidth, baseHeight, maxScale = 1.2 }) {
       setIsResizing(false);
     };
 
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
 
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isResizing, baseWidth, baseHeight, maxWidth, maxHeight]);
 

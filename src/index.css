@@ -1,27 +1,69 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* Font Faces */
 @font-face {
-  font-family: "Space Grotesk";
-  src: url("./assets/fonts/space-grotesk.woff2") format("woff2");
+  font-family: 'Space Grotesk';
+  src: url('./assets/fonts/space-grotesk.woff2') format('woff2');
   font-weight: 300 700;
   font-style: normal;
   font-display: swap;
 }
 
 @theme {
-  --font-family-space: "Space Grotesk", sans-serif;
+  /* Typography */
+  --font-family-space: 'Space Grotesk', sans-serif;
   --font-sans: var(--font-family-space);
+
+  /* --- BACKGROUNDS --- */
+  --color-app: #0e0e10;
+  --color-overlay: rgba(14, 14, 16, 0.8);
+  --color-card: rgba(20, 21, 26, 0.95);
+  --color-info: #14151a;
+  --color-modal: #16171d;
+  --color-header: #1a1b21;
+  --color-footer: #121318;
+
+  --color-one: #14151a;
+  --color-eight: rgba(20, 21, 26, 0.9);
+  --color-six: rgba(49, 50, 56, 0.65);
+  --color-three: rgba(20, 21, 26, 0.3);
+  --color-ten: rgba(49, 50, 56, 0.15);
+  --color-dark: rgba(16, 16, 20, 0.9);
+  --color-bar: rgba(112, 115, 140, 0.5);
+
+  /* SLOTS & ITEMS */
+  --color-slot-free: #101014;
+  --color-slot-used: #1b1b20;
+  --color-slot-hover: rgba(255, 255, 255, 0.03);
+  --color-item-hover: #232329;
+
+  /* UI ELEMENTS */
+  --color-input: #2a2a30;
+  --color-action: #1e1f26;
+  --color-key: #2a2b33;
+  --color-nav-key: rgba(255, 255, 255, 0.06);
+
+  /* Colors - Base */
+  --color-white-muted: #ffffff67;
+  --color-white-border: #ffffff27;
+
+  /* Borders */
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-strong: rgba(255, 255, 255, 0.15);
+
+  /* Text */
+  --color-muted: rgba(255, 255, 255, 0.45);
+  --color-secondary: rgba(255, 255, 255, 0.15);
 }
 
 /* Global font */
 html,
 body {
-  font-family: "Space Grotesk", sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 * {
-  font-family: "Space Grotesk", sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 /* Wiggle animation for edit mode */

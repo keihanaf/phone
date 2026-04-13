@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef } from 'react';
 import {
   DndContext,
   closestCenter,
@@ -6,12 +6,12 @@ import {
   useSensor,
   useSensors,
   DragOverlay,
-} from "@dnd-kit/core";
+} from '@dnd-kit/core';
 import {
   arrayMove,
   SortableContext,
   rectSortingStrategy,
-} from "@dnd-kit/sortable";
+} from '@dnd-kit/sortable';
 
 // SortableGrid Component
 export function SortableGrid({ items, renderItem, gridClassName, gridStyle }) {
@@ -48,7 +48,7 @@ export default function DraggableGrid({
       activationConstraint: {
         distance: isEditMode ? 5 : 999999,
       },
-    }),
+    })
   );
 
   const handleDragStart = (event) => {
@@ -132,7 +132,7 @@ export default function DraggableGrid({
           const reorderedApps = arrayMove(
             currentApps,
             activeItemIndex,
-            overItemIndex,
+            overItemIndex
           );
 
           newPages[activePageIndex] = reorderedApps.map((app, index) => ({

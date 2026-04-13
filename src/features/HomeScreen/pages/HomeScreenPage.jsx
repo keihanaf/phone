@@ -1,194 +1,202 @@
-import { useState, useRef } from "react";
-import { motion as Motion, AnimatePresence } from "framer-motion";
-import { useOutletContext } from "react-router-dom";
+import { useState, useRef, useCallback } from 'react';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
+import { useOutletContext } from 'react-router-dom';
 import DraggableGrid, {
   SortableGrid,
-} from "@/features/HomeScreen/components/DraggableGrid";
-import SortableAppItem from "@/features/HomeScreen/components/SortableAppItem";
+} from '@/features/HomeScreen/components/DraggableGrid';
+import SortableAppItem from '@/features/HomeScreen/components/SortableAppItem';
 import Application, {
   DockApplication,
-} from "@/features/HomeScreen/components/Application";
+} from '@/features/HomeScreen/components/Application';
+import { useAppLauncher } from '@/shared/context/AppLauncherContext';
 
 const INITIAL_PAGES = [
   // صفحه اول
   [
     {
-      id: "weather-1",
+      id: 'weather-1',
       order: 1,
-      name: "Weather",
+      name: 'Weather',
       colSpan: 2,
       rowSpan: 2,
       isWidget: true,
-      widgetSize: { width: "115px", height: "122px" },
-      widgetBg: "linear-gradient(0deg, #017BFF 0%, #5EC6F6 100%)",
+      widgetSize: { width: '115px', height: '122px' },
+      widgetBg: 'linear-gradient(0deg, #017BFF 0%, #5EC6F6 100%)',
     },
     {
-      id: "photos-2",
+      id: 'photos-2',
       order: 2,
-      name: "Photos",
-      image: "/src/assets/icons/gallery.png",
-      iconVariant: "full",
+      name: 'Photos',
+      image: '/src/assets/icons/gallery.png',
+      iconVariant: 'full',
     },
     {
-      id: "calendar-3",
+      id: 'calendar-3',
       order: 3,
-      name: "Calendar",
-      image: "/src/assets/icons/calendar.png",
-      iconVariant: "full",
+      name: 'Calendar',
+      image: '/src/assets/icons/calendar.png',
+      iconVariant: 'full',
     },
     {
-      id: "notes-4",
+      id: 'notes-4',
       order: 4,
-      name: "Notes",
-      image: "/src/assets/icons/notes.png",
-      iconVariant: "full",
+      name: 'Notes',
+      image: '/src/assets/icons/notes.png',
+      iconVariant: 'full',
     },
     {
-      id: "clock-5",
+      id: 'clock-5',
       order: 5,
-      name: "Clock",
-      image: "/src/assets/icons/clock.png",
-      iconVariant: "full",
+      name: 'Clock',
+      image: '/src/assets/icons/clock.png',
+      iconVariant: 'full',
     },
     {
-      id: "bleeter-6",
+      id: 'bleeter-6',
       order: 6,
-      name: "Bleeter",
-      image: "/src/assets/icons/bleeter.png",
-      iconVariant: "full",
+      name: 'Bleeter',
+      image: '/src/assets/icons/bleeter.png',
+      iconVariant: 'full',
     },
     {
-      id: "fruit-7",
+      id: 'fruit-7',
       order: 7,
-      name: "FruitMarket",
-      image: "/src/assets/icons/fruitmarket.png",
-      iconVariant: "full",
+      name: 'FruitMarket',
+      image: '/src/assets/icons/fruitmarket.png',
+      iconVariant: 'full',
     },
     {
-      id: "paymate-8",
+      id: 'paymate-8',
       order: 8,
-      name: "PayMate",
-      image: "/src/assets/icons/paymate.png",
-      iconVariant: "full",
+      name: 'PayMate',
+      image: '/src/assets/icons/paymate.png',
+      iconVariant: 'full',
     },
     {
-      id: "settings-9",
+      id: 'settings-9',
       order: 9,
-      name: "Settings",
-      image: "/src/assets/icons/settings.png",
-      iconVariant: "full",
+      name: 'Settings',
+      image: '/src/assets/icons/settings.png',
+      iconVariant: 'full',
     },
     {
-      id: "yellow-10",
+      id: 'yellow-10',
       order: 10,
-      name: "YellowJack",
-      image: "/src/assets/icons/yellowjack.png",
-      iconVariant: "full",
+      name: 'YellowJack',
+      image: '/src/assets/icons/yellowjack.png',
+      iconVariant: 'full',
     },
     {
-      id: "garages-11",
+      id: 'garages-11',
       order: 11,
-      name: "Garages",
-      image: "/src/assets/icons/garages.png",
-      iconVariant: "full",
+      name: 'Garages',
+      image: '/src/assets/icons/garages.png',
+      iconVariant: 'full',
     },
     {
-      id: "dynasty-12",
+      id: 'dynasty-12',
       order: 12,
-      name: "Dynasty8",
-      image: "/src/assets/icons/dynasty8.png",
-      iconVariant: "full",
+      name: 'Dynasty8',
+      image: '/src/assets/icons/dynasty8.png',
+      iconVariant: 'full',
     },
     {
-      id: "music-13",
+      id: 'music-13',
       order: 13,
-      name: "iFruit Music",
-      image: "/src/assets/icons/ifruitmusic.png",
-      iconVariant: "full",
+      name: 'iFruit Music',
+      image: '/src/assets/icons/ifruitmusic.png',
+      iconVariant: 'full',
     },
     {
-      id: "calc-14",
+      id: 'calc-14',
       order: 14,
-      name: "Calculator",
-      image: "/src/assets/icons/calculator.png",
-      iconVariant: "full",
+      name: 'Calculator',
+      image: '/src/assets/icons/calculator.png',
+      iconVariant: 'full',
     },
     {
-      id: "news-15",
+      id: 'news-15',
       order: 15,
-      name: "News",
-      image: "/src/assets/icons/news.png",
-      iconVariant: "full",
+      name: 'News',
+      image: '/src/assets/icons/news.png',
+      iconVariant: 'full',
     },
   ],
   // صفحه دوم
   [
     {
-      id: "news-16",
+      id: 'news-16',
       order: 16,
-      name: "News",
-      image: "/src/assets/icons/news.png",
-      iconVariant: "full",
+      name: 'News',
+      image: '/src/assets/icons/news.png',
+      iconVariant: 'full',
     },
     {
-      id: "calc-17",
+      id: 'calc-17',
       order: 17,
-      name: "Calculator",
-      image: "/src/assets/icons/calculator.png",
-      iconVariant: "full",
+      name: 'Calculator',
+      image: '/src/assets/icons/calculator.png',
+      iconVariant: 'full',
     },
     {
-      id: "paymate-18",
+      id: 'paymate-18',
       order: 18,
-      name: "PayMate",
-      image: "/src/assets/icons/paymate.png",
-      iconVariant: "full",
+      name: 'PayMate',
+      image: '/src/assets/icons/paymate.png',
+      iconVariant: 'full',
     },
     {
-      id: "clock-19",
+      id: 'clock-19',
       order: 19,
-      name: "Clock",
-      image: "/src/assets/icons/clock.png",
-      iconVariant: "full",
+      name: 'Clock',
+      image: '/src/assets/icons/clock.png',
+      iconVariant: 'full',
     },
     {
-      id: "music-20",
+      id: 'music-20',
       order: 20,
-      name: "iFruit Music",
-      image: "/src/assets/icons/ifruitmusic.png",
-      iconVariant: "full",
+      name: 'iFruit Music',
+      image: '/src/assets/icons/ifruitmusic.png',
+      iconVariant: 'full',
     },
     {
-      id: "dynasty-21",
+      id: 'dynasty-21',
       order: 21,
-      name: "Dynasty8",
-      image: "/src/assets/icons/dynasty8.png",
-      iconVariant: "full",
+      name: 'Dynasty8',
+      image: '/src/assets/icons/dynasty8.png',
+      iconVariant: 'full',
     },
   ],
 ];
 
 const DOCK_APPS = [
   {
-    image: "/src/assets/icons/phone.png",
-    iconVariant: "full",
+    id: 'dock-phone',
+    name: 'Phone',
+    image: '/src/assets/icons/phone.png',
+    iconVariant: 'full',
   },
   {
-    image: "/src/assets/icons/camera.png",
-    iconVariant: "full",
+    id: 'dock-camera',
+    name: 'Camera',
+    image: '/src/assets/icons/camera.png',
+    iconVariant: 'full',
   },
   {
-    image: "/src/assets/icons/message.png",
-    iconVariant: "full",
+    id: 'dock-message',
+    name: 'Messages',
+    image: '/src/assets/icons/message.png',
+    iconVariant: 'full',
   },
   {
-    image: "/src/assets/icons/email.png",
-    iconVariant: "full",
-    imageSize: { width: "40px", height: "40px", marginTop: "7px" },
+    id: 'dock-email',
+    name: 'Email',
+    image: '/src/assets/icons/email.png',
+    iconVariant: 'full',
+    imageSize: { width: '40px', height: '40px', marginTop: '7px' },
   },
 ];
 
-// --- Main Component ---
 export default function HomeScreenPage() {
   const { scale = 1 } = useOutletContext();
   const [pages, setPages] = useState(INITIAL_PAGES);
@@ -197,6 +205,8 @@ export default function HomeScreenPage() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [longPressTimer, setLongPressTimer] = useState(null);
   const containerRef = useRef(null);
+
+  const { launchApp } = useAppLauncher();
 
   const contentWidth = 265 * scale;
   const contentHeight = 460 * scale;
@@ -214,14 +224,18 @@ export default function HomeScreenPage() {
   const navPaddingV = 3 * scale;
   const navPaddingH = 5 * scale;
 
-  // Long press handler
+  const handleAppClick = useCallback(
+    (app) => {
+      launchApp(app);
+    },
+    [launchApp]
+  );
+
   const handlePointerDown = () => {
     if (isEditMode) return;
-
     const timer = setTimeout(() => {
       setIsEditMode(true);
     }, 500);
-
     setLongPressTimer(timer);
   };
 
@@ -232,12 +246,10 @@ export default function HomeScreenPage() {
     }
   };
 
-  // Exit edit mode
   const handleBackgroundClick = (e) => {
     if (isEditMode) {
       const target = e.target;
-      const isAppClick = target.closest("[data-app-item]");
-
+      const isAppClick = target.closest('[data-app-item]');
       if (!isAppClick) {
         setIsEditMode(false);
       }
@@ -251,7 +263,6 @@ export default function HomeScreenPage() {
 
   const handlePageSwipe = (_event, info) => {
     if (isEditMode) return;
-
     const offset = info.offset.x;
     const velocity = info.velocity.x;
 
@@ -289,13 +300,13 @@ export default function HomeScreenPage() {
       app={app}
       isEditMode={isEditMode}
       scale={scale}
+      onAppClick={handleAppClick}
     />
   );
 
   const renderDragOverlay = (activeId) => {
     const activeApp = pages.flat().find((app) => app.id === activeId);
     if (!activeApp) return null;
-
     return (
       <div className="pointer-events-none scale-110 shadow-2xl">
         <Application app={activeApp} scale={scale} />
@@ -305,7 +316,6 @@ export default function HomeScreenPage() {
 
   return (
     <>
-      {/* === Main Content === */}
       <div
         className="flex flex-col justify-between items-center shrink-0 overflow-hidden"
         style={{ width: `${contentWidth}px`, height: `${contentHeight}px` }}
@@ -337,9 +347,9 @@ export default function HomeScreenPage() {
                 exit="exit"
                 transition={{
                   duration: 0.15,
-                  ease: "easeOut",
+                  ease: 'easeOut',
                 }}
-                drag={!isEditMode ? "x" : false}
+                drag={!isEditMode ? 'x' : false}
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.1}
                 onDragEnd={handlePageSwipe}
@@ -365,9 +375,8 @@ export default function HomeScreenPage() {
           </DraggableGrid>
         </div>
 
-        {/* Navigation */}
         <div
-          className="flex items-center justify-center bg-black/20"
+          className="flex items-center justify-center bg-app/20"
           style={{
             width: `${navWidth}px`,
             height: `${navHeight}px`,
@@ -379,33 +388,37 @@ export default function HomeScreenPage() {
           {pages.map((_, index) => (
             <div
               key={index}
-              className={currentPage === index ? "bg-white" : "bg-white/50"}
+              className={currentPage === index ? 'bg-white' : 'bg-white/50'}
               style={{
                 width:
                   currentPage === index ? `${10 * scale}px` : `${3 * scale}px`,
                 height: `${3 * scale}px`,
                 borderRadius: `${3 * scale}px`,
-                transition: "all 0.3s ease",
+                transition: 'all 0.3s ease',
               }}
             />
           ))}
         </div>
       </div>
 
-      {/* === Dock === */}
       <div
-        className="flex justify-center items-center bg-white/5 backdrop-blur-md shrink-0"
+        className="flex justify-center items-center bg-white/5 backdrop-blur-md shrink-0 border-border"
         style={{
           width: `${dockWidth}px`,
           height: `${dockHeight}px`,
           gap: `${dockGap}px`,
           borderRadius: `${dockBorderRadius}px`,
-          border: "1px solid #FFFFFF1A",
+          borderWidth: '1px',
           padding: `${dockPadding}px`,
         }}
       >
-        {DOCK_APPS.map((app, index) => (
-          <DockApplication key={`dock-${index}`} app={app} scale={scale} />
+        {DOCK_APPS.map((app) => (
+          <DockApplication
+            key={app.id}
+            app={app}
+            scale={scale}
+            onClick={() => handleAppClick(app)}
+          />
         ))}
       </div>
     </>

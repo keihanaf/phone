@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { cn } from '@/shared/utils/cn.js';
 import PageHeader from '@/shared/components/ui/PageHeader.jsx';
 import ChatInput from '@/features/Message/components/ChatInput.jsx';
@@ -126,8 +126,20 @@ const THIRTY_HOURS_IN_MS = 30 * 60 * 60 * 1000;
 const THIRTY_MINS_IN_MS = 30 * 60 * 1000;
 
 export default function ChatPage({ scale = 1, contact, onBack }) {
-  const handleCallClick = () => {
-    console.log('Calling contact:', contact?.name || contact?.number);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => {
+    setMenuOpen((prev) => !prev);
+  };
+
+  const handleCall = () => {
+    console.log('Call clicked');
+    setMenuOpen(false);
+  };
+
+  const handleDeleteChat = () => {
+    console.log('Delete chat');
+    setMenuOpen(false);
   };
 
   const messagesWithBadges = useMemo(() => {
@@ -181,11 +193,96 @@ export default function ChatPage({ scale = 1, contact, onBack }) {
             scale={scale}
             onLeftClick={onBack}
             contact={contact}
-            onRightClick={handleCallClick}
-            rightIcon="fi-sr-phone-call"
-            rightVariant="call"
-            rightIconColor="text-[#315DFF]"
+            onRightClick={handleMenuToggle}
+            rightIcon="fi-rs-menu-dots"
+            rightIconColor="text-[#FFFFFF]"
+            rightVariant="menu"
           />
+          {menuOpen && (
+            <div
+              className="absolute z-50 flex justify-center"
+              style={{
+                right: `${10 * scale}px`,
+                width: `${120 * scale}px`,
+                height: `${50 * scale}px`,
+              }}
+            >
+              <div
+                className="flex flex-col justify-center"
+                style={{
+                  width: `${120 * scale}px`,
+                  height: `${50 * scale}px`,
+                  borderRadius: `${10 * scale}px`,
+                  background: '#313238A6',
+                  border: '1px solid #FFFFFF1A',
+                  backdropFilter: 'blur(10px)',
+                  boxShadow: '0px 4px 10px rgba(0,0,0,0.25)',
+                  padding: `${5 * scale}px`,
+                  gap: `${5 * scale}px`,
+                }}
+              >
+                {/* Call */}
+                <button
+                  onClick={handleCall}
+                  className="flex items-center"
+                  style={{
+                    width: `${68 * scale}px`,
+                    height: `${20 * scale}px`,
+                    gap: `${5 * scale}px`,
+                    padding: `${5 * scale}px`,
+                  }}
+                >
+                  <i
+                    className="fi fi-rs-phone-call flex justify-center items-center"
+                    style={{
+                      fontSize: `${8 * scale}px`,
+                      color: '#FFFFFF',
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontSize: `${8 * scale}px`,
+                      fontFamily: 'Space Grotesk',
+                      color: '#FFFFFF',
+                      lineHeight: '100%',
+                    }}
+                  >
+                    Call
+                  </span>
+                </button>
+
+                {/* Delete */}
+                <button
+                  onClick={handleDeleteChat}
+                  className="flex items-center"
+                  style={{
+                    width: `${68 * scale}px`,
+                    height: `${20 * scale}px`,
+                    gap: `${5 * scale}px`,
+                    padding: `${5 * scale}px`,
+                  }}
+                >
+                  <i
+                    className="fi fi-rs-trash flex justify-center items-center"
+                    style={{
+                      fontSize: `${8 * scale}px`,
+                      color: '#FFFFFF',
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontSize: `${8 * scale}px`,
+                      fontFamily: 'Space Grotesk',
+                      color: '#FFFFFF',
+                      lineHeight: '100%',
+                    }}
+                  >
+                    Delete Chat
+                  </span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Messages List */}

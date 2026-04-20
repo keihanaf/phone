@@ -17,11 +17,9 @@ const messageItemVariants = cva(
   }
 );
 
-// Helper function to find and highlight the searched text
 const renderHighlightedText = (text, highlight, scale) => {
-  if (!highlight || !highlight.trim()) {
-    return <>{text}</>;
-  }
+  if (!highlight || !highlight.trim()) return <>{text}</>;
+
   const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
 
   return (
@@ -73,7 +71,6 @@ export default function MessageItem({
     };
   }
 
-  // Handle keyboard interaction for accessibility
   const handleKeyDown = (e) => {
     if ((e.key === 'Enter' || e.key === ' ') && onClick) {
       e.preventDefault();
@@ -99,10 +96,8 @@ export default function MessageItem({
         ...borderRadiusStyles,
       }}
     >
-      {/* ---------------- Search Variant ---------------- */}
       {variant === 'search' ? (
         <div className="flex flex-col justify-center flex-1 min-w-0 h-full">
-          {/* First Row: Name and Recipient/Top Date */}
           <div className="flex items-center justify-between w-full mb-0.5">
             <span
               className="font-bold truncate text-white"
@@ -131,31 +126,41 @@ export default function MessageItem({
             )}
           </div>
 
-          {/* Second Row: Highlighted Message and Bottom Date */}
           <div className="flex items-center justify-between w-full">
             <span
               className="font-normal truncate flex-1 min-w-0 pr-2 text-muted"
-              style={{
-                fontSize: `${8 * scale}px`,
-              }}
+              style={{ fontSize: `${8 * scale}px` }}
             >
               {renderHighlightedText(message.lastMessage, searchQuery, scale)}
             </span>
 
-            <span
-              className="font-normal shrink-0 text-muted"
-              style={{
-                fontSize: `${6 * scale}px`,
-              }}
+            <div
+              className="flex items-center shrink-0"
+              style={{ gap: `${5 * scale}px` }}
             >
-              {message.time}
-            </span>
+              <span
+                className="font-normal text-muted"
+                style={{ fontSize: `${6 * scale}px` }}
+              >
+                {message.time}
+              </span>
+
+              {message.unread && (
+                <span
+                  style={{
+                    width: `${5 * scale}px`,
+                    height: `${5 * scale}px`,
+                    background: '#315DFF',
+                    borderRadius: '50%',
+                  }}
+                />
+              )}
+            </div>
           </div>
         </div>
       ) : (
-        /* ---------------- Default Variant ---------------- */
         <>
-          {/* Avatar / Image Section */}
+          {/* Avatar */}
           <div
             className={cn(
               'flex justify-center shrink-0 overflow-hidden relative',
@@ -171,7 +176,7 @@ export default function MessageItem({
             {hasImage ? (
               <img
                 src={message.image}
-                alt={contactName || 'User Avatar'}
+                alt={contactName}
                 className="w-full h-full object-cover"
               />
             ) : hasName ? (
@@ -195,7 +200,7 @@ export default function MessageItem({
             )}
           </div>
 
-          {/* Message Content Section (Default) */}
+          {/* Content */}
           <div className="flex flex-col justify-center flex-1 min-w-0 h-full">
             <div className="flex items-center justify-between w-full mb-0.5">
               <span
@@ -204,12 +209,29 @@ export default function MessageItem({
               >
                 {contactName}
               </span>
-              <span
-                className="font-normal shrink-0 text-white"
-                style={{ fontSize: `${6 * scale}px` }}
+
+              <div
+                className="flex items-center shrink-0"
+                style={{ gap: `${5 * scale}px` }}
               >
-                {message.time}
-              </span>
+                <span
+                  className="font-normal text-white"
+                  style={{ fontSize: `${6 * scale}px` }}
+                >
+                  {message.time}
+                </span>
+
+                {message.unread && (
+                  <span
+                    style={{
+                      width: `${5 * scale}px`,
+                      height: `${5 * scale}px`,
+                      background: '#315DFF',
+                      borderRadius: '50%',
+                    }}
+                  />
+                )}
+              </div>
             </div>
 
             <div className="flex items-center justify-between w-full">
@@ -236,7 +258,6 @@ export default function MessageItem({
   );
 }
 
-// PropTypes definitions mapped to standard descriptive English
 MessageItem.propTypes = {
   message: PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
@@ -248,6 +269,7 @@ MessageItem.propTypes = {
     status: PropTypes.oneOf(['Sent', 'Seen', '']),
     isOutbound: PropTypes.bool,
     topTime: PropTypes.string,
+    unread: PropTypes.bool,
   }).isRequired,
   isFirst: PropTypes.bool,
   isLast: PropTypes.bool,

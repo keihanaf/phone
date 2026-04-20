@@ -13,6 +13,9 @@ const appComponents = {
     () => import('@/features/YellowJack/pages/YellowJackPage.jsx')
   ),
   '/bleeter': lazy(() => import('@/features/Bleeter/pages/BleeterPage.jsx')),
+  '/fruitmarket': lazy(
+    () => import('@/features/FruitMarket/pages/FruitMarketPage.jsx')
+  ),
 };
 
 /* ───────────── Default Content ───────────── */

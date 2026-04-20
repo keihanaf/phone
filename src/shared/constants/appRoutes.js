@@ -4,6 +4,7 @@ export const APP_ROUTES = {
   'paymate-8': '/paymate',
   'yellow-10': '/yellowjack',
   'bleeter-6': '/bleeter',
+  'fruit-7': '/fruitmarket',
   // "dock-camera": "/camera",
   // "settings-9": "/settings",
 };

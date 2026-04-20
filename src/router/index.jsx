@@ -9,6 +9,7 @@ import MessagePage from '@/features/Message/pages/MessagePage.jsx';
 import PayMatePage from '@/features/PayMate/pages/PayMatePage.jsx';
 import YellowJackPage from '@/features/YellowJack/pages/YellowJackPage.jsx';
 import BleeterPage from '@/features/Bleeter/pages/BleeterPage.jsx';
+import FruitMarketPage from '@/features/FruitMarket/pages/FruitMarketPage';
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
       {
         path: 'bleeter',
         element: <BleeterPage />,
+      },
+      {
+        path: 'fruitmarket',
+        element: <FruitMarketPage />,
       },
     ],
   },

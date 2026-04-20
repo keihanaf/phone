@@ -21,6 +21,7 @@ const MOCK_MESSAGES = [
     topTime: 'Yesterday',
     status: '',
     isOutbound: false,
+    unread: true,
   },
   {
     id: 2,
@@ -31,6 +32,7 @@ const MOCK_MESSAGES = [
     topTime: 'Monday',
     status: 'Seen',
     isOutbound: true,
+    unread: false,
   },
   {
     id: 3,
@@ -42,6 +44,7 @@ const MOCK_MESSAGES = [
     topTime: 'Tuesday',
     status: 'Sent',
     isOutbound: true,
+    unread: false,
   },
   {
     id: 4,
@@ -52,6 +55,7 @@ const MOCK_MESSAGES = [
     topTime: '12/3',
     status: '',
     isOutbound: false,
+    unread: true,
   },
   {
     id: 5,
@@ -60,6 +64,7 @@ const MOCK_MESSAGES = [
     lastMessage: 'Call me RIGHT NOW!',
     time: 'Friday',
     status: '',
+    unread: false,
   },
   {
     id: 6,
@@ -68,6 +73,7 @@ const MOCK_MESSAGES = [
     lastMessage: 'I think we need to talk',
     time: 'Tuesday',
     status: 'Seen',
+    unread: true,
   },
   {
     id: 7,
@@ -76,6 +82,7 @@ const MOCK_MESSAGES = [
     lastMessage: 'Ok Bye.',
     time: '09/3',
     status: '',
+    unread: false,
   },
 ];
 

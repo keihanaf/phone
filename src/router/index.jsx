@@ -10,6 +10,7 @@ import PayMatePage from '@/features/PayMate/pages/PayMatePage.jsx';
 import YellowJackPage from '@/features/YellowJack/pages/YellowJackPage.jsx';
 import BleeterPage from '@/features/Bleeter/pages/BleeterPage.jsx';
 import FruitMarketPage from '@/features/FruitMarket/pages/FruitMarketPage';
+import MailPage from '@/features/Mail/pages/MailPage';
 
 export const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       {
         path: 'fruitmarket',
         element: <FruitMarketPage />,
+      },
+      {
+        path: 'mail',
+        element: <MailPage />,
       },
     ],
   },

@@ -6,6 +6,7 @@ export const APP_ROUTES = {
   'yellow-10': '/yellowjack',
   'bleeter-6': '/bleeter',
   'fruit-7': '/fruitmarket',
+  'dynasty-12': '/dinasty',
   // "dock-camera": "/camera",
   // "settings-9": "/settings",
 };

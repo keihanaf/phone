@@ -17,6 +17,7 @@ const appComponents = {
     () => import('@/features/FruitMarket/pages/FruitMarketPage.jsx')
   ),
   '/mail': lazy(() => import('@/features/Mail/pages/MailPage.jsx')),
+  '/dinasty': lazy(() => import('@/features/Dinasty8/pages/DinastyPage.jsx')),
 };
 
 /* ───────────── Default Content ───────────── */

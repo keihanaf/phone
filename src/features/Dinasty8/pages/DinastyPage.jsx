@@ -4,11 +4,12 @@ import { cn } from '@/shared/utils/cn.js';
 
 // UI Components
 import PageHeader from '@/shared/components/ui/PageHeader.jsx';
-import DinastyItem from '@/features/Dinasty8/components/DinastyItem.jsx';
+import ExpandableAssetCard from '@/shared/components/cards/ExpandableAssetCard.jsx';
 import DinastyActionBar from '@/features/Dinasty8/components/DinastyActionBar.jsx';
 import DinastyBuildingPage from '@/features/Dinasty8/pages/DinastyBuildingPage.jsx';
 
-// --- Mock Data ---
+// Mock Data
+
 const houseMenuData = [
   {
     id: 'root',
@@ -110,8 +111,7 @@ const warehouseMenuData = [
   },
 ];
 
-// --- Main Page Component ---
-
+// Main Page Component
 export default function DinastyPage({ scale = 1, onClose }) {
   const [activeTab, setActiveTab] = useState('home');
 
@@ -212,44 +212,44 @@ export default function DinastyPage({ scale = 1, onClose }) {
               style={{
                 paddingTop: `${5 * scale}px`,
                 gap: `${10 * scale}px`,
+                paddingLeft: `${10 * scale}px`,
+                paddingRight: `${10 * scale}px`,
               }}
             >
-              {/* === My Properties (Dropdowns) === */}
+              {/* === My Properties (Expandable Variants) === */}
               <div
                 className="flex flex-col items-center justify-start w-full"
                 style={{ gap: `${10 * scale}px` }}
               >
-                <DinastyItem
-                  variant="dropdown"
+                <ExpandableAssetCard
+                  variant="expandable"
                   scale={scale}
                   title="My House"
-                  subValue="25"
-                  mainIcon="fi-ss-home"
+                  badgeText="25"
+                  icon="fi-ss-home"
                   subtitle="Alta st, Pillbox Hill"
                   menuData={houseMenuData}
                   onItemAction={handleItemAction}
                 />
 
-                <DinastyItem
-                  variant="dropdown"
+                <ExpandableAssetCard
+                  variant="expandable"
                   scale={scale}
                   title="Pillbox Warehouse"
-                  subValue=""
-                  mainIcon="fi-ss-home"
+                  badgeText=""
+                  icon="fi-ss-home"
                   subtitle="Commercial Dist, Los Santos"
                   menuData={warehouseMenuData}
                   onItemAction={handleItemAction}
                 />
               </div>
 
-              {/* === Shared Keys Section (Locations) === */}
+              {/* === Shared Keys Section (Static Variants) === */}
               <div
                 className="flex flex-col justify-start w-full"
                 style={{
-                  gap: `${5 * scale}px`,
+                  gap: `${10 * scale}px`,
                   marginTop: `${5 * scale}px`,
-                  paddingLeft: `${10 * scale}px`,
-                  paddingRight: `${10 * scale}px`,
                 }}
               >
                 <span
@@ -267,24 +267,26 @@ export default function DinastyPage({ scale = 1, onClose }) {
                   Shared Keys
                 </span>
 
-                <DinastyItem
-                  variant="location"
+                <ExpandableAssetCard
+                  variant="static"
                   scale={scale}
                   title="Eclipse Towers"
-                  subValue="Apt 3"
-                  mainIcon="fi-ss-home"
+                  badgeText="Apt 3"
+                  icon="fi-ss-home"
                   subtitle="Rockford Hills, Los Santos"
-                  onMarkerClick={() => handleMarkerSet('Eclipse Towers')}
+                  actionIcon="fi-rs-marker"
+                  onActionClick={() => handleMarkerSet('Eclipse Towers')}
                 />
 
-                <DinastyItem
-                  variant="location"
+                <ExpandableAssetCard
+                  variant="static"
                   scale={scale}
                   title="Integrity Way"
-                  subValue="Apt 28"
-                  mainIcon="fi-ss-home"
+                  badgeText="Apt 28"
+                  icon="fi-ss-home"
                   subtitle="Pillbox Hill, Los Santos"
-                  onMarkerClick={() => handleMarkerSet('Integrity Way')}
+                  actionIcon="fi-rs-marker"
+                  onActionClick={() => handleMarkerSet('Integrity Way')}
                 />
               </div>
             </div>

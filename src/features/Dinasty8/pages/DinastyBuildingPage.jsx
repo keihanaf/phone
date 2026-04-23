@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 // UI Components
-import DinastyItem from '@/features/Dinasty8/components/DinastyItem.jsx';
+import ExpandableAssetCard from '@/shared/components/cards/ExpandableAssetCard.jsx';
 
 const officeMenuData = [
   {
@@ -92,11 +92,7 @@ const apartmentMenuData = [
 
 // --- Main Page Component ---
 
-export default function DinastyBuildingPage({
-  scale = 1,
-
-  onItemAction,
-}) {
+export default function DinastyBuildingPage({ scale = 1, onItemAction }) {
   const handleMarkerSet = useCallback((propertyName) => {
     console.log(`Marker set for ${propertyName}`);
   }, []);
@@ -106,45 +102,45 @@ export default function DinastyBuildingPage({
       className="flex flex-col items-center justify-start w-full h-full"
       style={{
         paddingTop: `${5 * scale}px`,
+        paddingLeft: `${10 * scale}px`,
+        paddingRight: `${10 * scale}px`,
         gap: `${10 * scale}px`,
       }}
     >
-      {/* === My Buildings (Dropdowns) === */}
+      {/* === My Buildings (Expandable Variants) === */}
       <div
         className="flex flex-col items-center justify-start w-full"
         style={{ gap: `${10 * scale}px` }}
       >
-        <DinastyItem
-          variant="dropdown"
+        <ExpandableAssetCard
+          variant="expandable"
           scale={scale}
           title="Arcadius Business Center"
-          subValue="Office 12"
-          mainIcon="fi-ss-building"
+          badgeText="Office 12"
+          icon="fi-ss-building"
           subtitle="Pillbox Hill, Los Santos"
           menuData={officeMenuData}
           onItemAction={onItemAction}
         />
 
-        <DinastyItem
-          variant="dropdown"
+        <ExpandableAssetCard
+          variant="expandable"
           scale={scale}
           title="Richman Mansion"
-          subValue=""
-          mainIcon="fi-ss-building"
+          badgeText=""
+          icon="fi-ss-building"
           subtitle="Richman, Los Santos"
           menuData={apartmentMenuData}
           onItemAction={onItemAction}
         />
       </div>
 
-      {/* === Shared Offices Section (Locations) === */}
+      {/* === Shared Offices Section (Static Variants) === */}
       <div
         className="flex flex-col justify-start w-full"
         style={{
-          gap: `${5 * scale}px`,
+          gap: `${10 * scale}px`,
           marginTop: `${5 * scale}px`,
-          paddingLeft: `${10 * scale}px`,
-          paddingRight: `${10 * scale}px`,
         }}
       >
         <span
@@ -162,24 +158,26 @@ export default function DinastyBuildingPage({
           Shared Workspaces
         </span>
 
-        <DinastyItem
-          variant="location"
+        <ExpandableAssetCard
+          variant="static"
           scale={scale}
           title="Maze Bank Tower"
-          subValue="Floor 45"
-          mainIcon="fi-ss-building"
+          badgeText="Floor 45"
+          icon="fi-ss-building"
           subtitle="Pillbox Hill, Los Santos"
-          onMarkerClick={() => handleMarkerSet('Maze Bank Tower')}
+          actionIcon="fi-rs-marker"
+          onActionClick={() => handleMarkerSet('Maze Bank Tower')}
         />
 
-        <DinastyItem
-          variant="location"
+        <ExpandableAssetCard
+          variant="static"
           scale={scale}
           title="Lombank West"
-          subValue="Suite 3"
-          mainIcon="fi-ss-building"
+          badgeText="Suite 3"
+          icon="fi-ss-building"
           subtitle="Del Perro, Los Santos"
-          onMarkerClick={() => handleMarkerSet('Lombank West')}
+          actionIcon="fi-rs-marker"
+          onActionClick={() => handleMarkerSet('Lombank West')}
         />
       </div>
     </div>

@@ -198,6 +198,29 @@ export default function ExpandableAssetCard({
 
         {/* Right Actions Section */}
         <div className="flex items-center" style={{ gap: `${5 * scale}px` }}>
+          {/* Expandable Action Box (Caret Down) */}
+          {(variant === 'expandable' || variant === 'combo') && (
+            <div
+              className={cn(
+                actionBoxClass,
+                variant === 'expandable' && isOpen ? 'bg-[#315DFF]' : 'bg-six'
+              )}
+              style={{
+                width: `${15 * scale}px`,
+                height: `${15 * scale}px`,
+                borderRadius: `${3 * scale}px`,
+              }}
+            >
+              <i
+                className="fi fi-ss-angle-small-down flex items-center justify-center transition-transform duration-300"
+                style={{
+                  fontSize: `${10 * scale}px`,
+                  color: isOpen ? '#FFFFFF' : 'var(--color-muted)',
+                  transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                }}
+              />
+            </div>
+          )}
           {/* Static Action Box (Location Marker) */}
           {(variant === 'static' || variant === 'combo') && (
             <div
@@ -220,30 +243,6 @@ export default function ExpandableAssetCard({
                 style={{
                   fontSize: `${10 * scale}px`,
                   color: '#315DFF',
-                }}
-              />
-            </div>
-          )}
-
-          {/* Expandable Action Box (Caret Down) */}
-          {(variant === 'expandable' || variant === 'combo') && (
-            <div
-              className={cn(
-                actionBoxClass,
-                variant === 'expandable' && isOpen ? 'bg-[#315DFF]' : 'bg-six'
-              )}
-              style={{
-                width: `${15 * scale}px`,
-                height: `${15 * scale}px`,
-                borderRadius: `${3 * scale}px`,
-              }}
-            >
-              <i
-                className="fi fi-ss-angle-small-down flex items-center justify-center transition-transform duration-300"
-                style={{
-                  fontSize: `${10 * scale}px`,
-                  color: isOpen ? '#FFFFFF' : 'var(--color-muted)',
-                  transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
                 }}
               />
             </div>

@@ -8,6 +8,7 @@ export const APP_ROUTES = {
   'fruit-7': '/fruitmarket',
   'dynasty-12': '/dinasty',
   'garages-11': '/garages',
+  'settings-9': '/setting',
   // "dock-camera": "/camera",
   // "settings-9": "/settings",
 };

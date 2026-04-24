@@ -19,6 +19,7 @@ const appComponents = {
   '/mail': lazy(() => import('@/features/Mail/pages/MailPage.jsx')),
   '/dinasty': lazy(() => import('@/features/Dinasty8/pages/DinastyPage.jsx')),
   '/garages': lazy(() => import('@/features/Garages/pages/GaragesPage.jsx')),
+  '/setting': lazy(() => import('@/features/Setting/pages/SettingPage.jsx')),
 };
 
 /* ───────────── Default Content ───────────── */

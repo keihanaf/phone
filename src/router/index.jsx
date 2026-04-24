@@ -11,6 +11,7 @@ import YellowJackPage from '@/features/YellowJack/pages/YellowJackPage.jsx';
 import BleeterPage from '@/features/Bleeter/pages/BleeterPage.jsx';
 import FruitMarketPage from '@/features/FruitMarket/pages/FruitMarketPage';
 import MailPage from '@/features/Mail/pages/MailPage';
+import SettingPage from '@/features/Setting/pages/SettingPage';
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ export const router = createBrowserRouter([
       {
         path: 'mail',
         element: <MailPage />,
+      },
+      {
+        path: 'setting',
+        element: <SettingPage />,
       },
     ],
   },

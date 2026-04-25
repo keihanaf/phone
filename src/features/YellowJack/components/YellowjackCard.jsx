@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/shared/utils/cn.js';
+import Button from '@/shared/components/elements/Button.jsx';
 
 // Badge variant configurations (Selling / Buying)
 const badgeVariants = cva(
@@ -63,7 +64,7 @@ export default function YellowjackCard({
     <div
       onClick={onClick}
       className={cn(
-        'flex flex-col overflow-hidden cursor-pointer transition-transform duration-200 hover:scale-[1.02 bg-one',
+        'flex flex-col overflow-hidden cursor-pointer transition-transform duration-200 hover:scale-[1.02] bg-one',
         className
       )}
       style={{
@@ -198,19 +199,18 @@ export default function YellowjackCard({
         </div>
 
         {/* Right: Action Button */}
-        <button
-          className="flex items-center justify-center transition-colors duration-200 bg-action hover:bg-item-hover"
+        <Button
+          variant="iconButton"
+          icon="fi fi-ss-angle-small-right"
+          iconClassName="text-muted"
+          iconStyle={{ fontSize: `${10 * scale}px` }}
+          className="bg-action hover:bg-item-hover"
           style={{
             width: `${15 * scale}px`,
             height: `${15 * scale}px`,
             borderRadius: `${3 * scale}px`,
           }}
-        >
-          <i
-            className="fi fi-ss-angle-small-right flex justify-center items-center text-muted"
-            style={{ fontSize: `${10 * scale}px` }}
-          />
-        </button>
+        />
       </div>
     </div>
   );

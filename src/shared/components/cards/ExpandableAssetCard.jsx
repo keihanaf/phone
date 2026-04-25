@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/shared/utils/cn.js';
 import DropdownItem from '@/shared/components/modules/dropdown/DropdownItem.jsx';
+import Button from '@/shared/components/elements/Button.jsx';
 
 // Variants Definition
 
@@ -113,6 +114,8 @@ export default function ExpandableAssetCard({
     }
   };
 
+  const isBackButton = isExpandable && isSubMenu;
+
   return (
     <div
       className={cn('flex flex-col w-full', className)}
@@ -134,30 +137,29 @@ export default function ExpandableAssetCard({
         }}
       >
         <div className="flex items-center" style={{ gap: `${5 * scale}px` }}>
-          {/* Main Left Icon */}
-          <div
-            className={mainIconBoxVariants({ variant, isOpen })}
-            onClick={isExpandable && isSubMenu ? handleBackToRoot : undefined}
+          <Button
+            variant="ghost"
+            icon={isBackButton ? 'fi-ss-angle-small-left' : icon}
+            iconSize={`${15 * scale}px`}
+            iconColor={
+              isOpen && variant === 'expandable'
+                ? '#FFFFFF'
+                : 'var(--color-muted)'
+            }
+            className={cn(
+              mainIconBoxVariants({ variant, isOpen }),
+              !isBackButton && 'pointer-events-none',
+              'p-0!'
+            )}
+            onClick={isBackButton ? handleBackToRoot : undefined}
             style={{
               width: `${30 * scale}px`,
               height: `${30 * scale}px`,
               borderRadius: `${5 * scale}px`,
             }}
-          >
-            <i
-              className={cn(
-                'fi flex items-center justify-center',
-                isExpandable && isSubMenu ? 'fi-ss-angle-small-left' : icon
-              )}
-              style={{
-                fontSize: `${15 * scale}px`,
-                color:
-                  isOpen && variant === 'expandable'
-                    ? '#FFFFFF'
-                    : 'var(--color-muted)',
-              }}
-            />
-          </div>
+            aria-label={isBackButton ? 'Back to main menu' : undefined}
+            aria-hidden={!isBackButton}
+          />
 
           {/* Texts (Title, Badge, Subtitle) */}
           <div className="flex min-w-0 flex-col justify-center">
@@ -198,7 +200,7 @@ export default function ExpandableAssetCard({
 
         {/* Right Actions Section */}
         <div className="flex items-center" style={{ gap: `${5 * scale}px` }}>
-          {/* Expandable Action Box (Caret Down) */}
+          {/* Expandable Action Box (Caret Down - Kept as div to avoid nested interactables) */}
           {(variant === 'expandable' || variant === 'combo') && (
             <div
               className={cn(
@@ -221,31 +223,23 @@ export default function ExpandableAssetCard({
               />
             </div>
           )}
-          {/* Static Action Box (Location Marker) */}
+
+          {/* Static Action Box Button */}
           {(variant === 'static' || variant === 'combo') && (
-            <div
-              className={cn(
-                actionBoxClass,
-                'bg-[#315DFF]/30 hover:bg-[#315DFF]/40 cursor-pointer'
-              )}
-              onClick={handleActionClick}
+            <Button
+              variant="iconButton"
+              icon={actionIcon}
+              iconClassName="text-[#315DFF]"
+              iconSize={`${10 * scale}px`}
+              className="bg-[#315DFF]/30 hover:bg-[#315DFF]/40 transition-all duration-300 p-0!"
               style={{
                 width: `${15 * scale}px`,
                 height: `${15 * scale}px`,
                 borderRadius: `${3 * scale}px`,
               }}
-            >
-              <i
-                className={cn(
-                  'fi flex items-center justify-center',
-                  actionIcon
-                )}
-                style={{
-                  fontSize: `${10 * scale}px`,
-                  color: '#315DFF',
-                }}
-              />
-            </div>
+              onClick={handleActionClick}
+              aria-label="Action"
+            />
           )}
         </div>
       </div>

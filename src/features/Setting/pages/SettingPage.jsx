@@ -192,33 +192,31 @@ export default function SettingPage({ scale = 1, onClose }) {
                 >
                   <Button
                     variant="iconButton"
-                    icon="fi fi-ss-pencil"
+                    icon="fi-ss-pencil"
+                    iconSize={`${8 * scale}px`}
+                    iconColor="var(--color-muted)"
                     onClick={() => setIsContactDetailOpen(true)}
-                    iconStyle={{
-                      fontSize: `${8 * scale}px`,
-                      color: 'var(--color-muted)',
-                    }}
                     style={{
                       width: `${15 * scale}px`,
                       height: `${15 * scale}px`,
                       borderRadius: `${5 * scale}px`,
                       background: 'var(--color-bar)',
                     }}
+                    aria-label="Edit Contact"
                   />
 
                   <Button
                     variant="iconButton"
-                    icon="fi fi-ss-share"
-                    iconStyle={{
-                      fontSize: `${8 * scale}px`,
-                      color: '#315DFF',
-                    }}
+                    icon="fi-ss-share"
+                    iconSize={`${8 * scale}px`}
+                    iconColor="#315DFF"
                     style={{
                       width: `${15 * scale}px`,
                       height: `${15 * scale}px`,
                       borderRadius: `${5 * scale}px`,
                       background: '#315DFF4D',
                     }}
+                    aria-label="Share Contact"
                   />
                 </div>
               </div>
@@ -242,12 +240,13 @@ export default function SettingPage({ scale = 1, onClose }) {
                   >
                     Details
                   </span>
-                  <i
-                    className="fi fi-rs-angle-small-right flex items-center justify-center"
-                    style={{
-                      fontSize: `${10 * scale}px`,
-                      color: 'var(--color-muted)',
-                    }}
+                  <Button
+                    variant="ghost"
+                    icon="fi-rs-angle-small-right"
+                    iconSize={`${10 * scale}px`}
+                    iconColor="var(--color-muted)"
+                    className="pointer-events-none p-0!"
+                    aria-hidden="true"
                   />
                 </div>
               </div>
@@ -370,12 +369,13 @@ export default function SettingPage({ scale = 1, onClose }) {
                 >
                   Wallpaper
                 </span>
-                <i
-                  className="fi fi-rs-angle-small-right flex items-center justify-center"
-                  style={{
-                    fontSize: `${10 * scale}px`,
-                    color: 'var(--color-muted)',
-                  }}
+                <Button
+                  variant="ghost"
+                  icon="fi-rs-angle-small-right"
+                  iconSize={`${10 * scale}px`}
+                  iconColor="var(--color-muted)"
+                  className="pointer-events-none p-0!"
+                  aria-hidden="true"
                 />
               </div>
 
@@ -450,12 +450,13 @@ export default function SettingPage({ scale = 1, onClose }) {
                 >
                   Ringtone
                 </span>
-                <i
-                  className="fi fi-rs-angle-small-right flex items-center justify-center"
-                  style={{
-                    fontSize: `${10 * scale}px`,
-                    color: 'var(--color-muted)',
-                  }}
+                <Button
+                  variant="ghost"
+                  icon="fi-rs-angle-small-right"
+                  iconSize={`${10 * scale}px`}
+                  iconColor="var(--color-muted)"
+                  className="pointer-events-none p-0!"
+                  aria-hidden="true"
                 />
               </div>
 
@@ -580,12 +581,13 @@ export default function SettingPage({ scale = 1, onClose }) {
                     </span>
                   </div>
 
-                  <i
-                    className="fi fi-rs-angle-small-right flex items-center justify-center"
-                    style={{
-                      fontSize: `${10 * scale}px`,
-                      color: 'var(--color-muted)',
-                    }}
+                  <Button
+                    variant="ghost"
+                    icon="fi-rs-angle-small-right"
+                    iconSize={`${10 * scale}px`}
+                    iconColor="var(--color-muted)"
+                    className="pointer-events-none p-0!"
+                    aria-hidden="true"
                   />
                 </div>
               ))}

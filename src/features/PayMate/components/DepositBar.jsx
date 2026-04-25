@@ -1,8 +1,10 @@
 import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
-// eslint-disable-next-line
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/shared/utils/cn.js';
+
+import Button from '@/shared/components/elements/Button.jsx';
+
+const MotionButton = motion(Button);
 
 export default function DepositBar({ scale = 1 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -24,7 +26,7 @@ export default function DepositBar({ scale = 1 }) {
 
   return (
     <div
-      className="relative w-full flex justify-center items-end  text-white"
+      className="relative w-full flex justify-center items-end text-white"
       style={{ height: `${35 * scale}px` }}
     >
       <AnimatePresence mode="wait">
@@ -83,9 +85,7 @@ export default function DepositBar({ scale = 1 }) {
                     outline: 'none',
                     boxSizing: 'border-box',
                   }}
-                  className={cn(
-                    'text-white placeholder:text-muted transition-colors focus:ring-1 focus:ring-white-border'
-                  )}
+                  className="text-white placeholder:text-muted transition-colors focus:ring-1 focus:ring-white-border"
                 />
               ))}
             </div>
@@ -112,66 +112,51 @@ export default function DepositBar({ scale = 1 }) {
                   resize: 'none',
                   boxSizing: 'border-box',
                 }}
-                className={cn(
-                  'text-white placeholder:text-muted transition-colors focus:ring-1 focus:ring-white-border'
-                )}
+                className="text-white placeholder:text-muted transition-colors focus:ring-1 focus:ring-white-border"
               />
 
-              <button
+              {/* Submit Button */}
+              <Button
+                variant="iconButton"
                 onClick={handleSubmit}
-                className="hover:opacity-90 transition-opacity"
+                icon="fi fi-rs-sign-out-alt"
+                iconClassName="text-white"
+                iconStyle={{ fontSize: `${12 * scale}px` }}
+                className="absolute bg-[#315DFF]"
                 style={{
-                  position: 'absolute',
                   bottom: `${8 * scale}px`,
                   right: `${8 * scale}px`,
                   width: `${20 * scale}px`,
                   height: `${20 * scale}px`,
                   borderRadius: `${6 * scale}px`,
-                  backgroundColor: '#315DFF',
-                  border: 'none',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
                 }}
-              >
-                <i
-                  className="fi fi-rs-sign-out-alt flex items-center justify-center text-white"
-                  style={{ fontSize: `${12 * scale}px` }}
-                />
-              </button>
+              />
             </div>
           </motion.div>
         ) : (
-          <motion.button
+          /* Toggle Button */
+          <MotionButton
             key="toggle"
+            variant="iconButton"
             initial={{ opacity: 0, scale: 0.85 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.85 }}
             transition={springTransition}
             onClick={() => setIsOpen(true)}
-            className="hover:opacity-90 transition-opacity shadow-lg"
+            icon="fi fi-rs-sign-out-alt"
+            iconClassName="text-white"
+            iconStyle={{ fontSize: `${13 * scale}px` }}
+            className="absolute shadow-lg"
             style={{
-              position: 'absolute',
               right: 0,
               bottom: 0,
               width: `${35 * scale}px`,
               height: `${35 * scale}px`,
               borderRadius: `${25 * scale}px`,
               backgroundColor: 'rgba(246, 60, 68, 0.80)',
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
               transformOrigin: 'bottom right',
             }}
-          >
-            <i
-              className="fi fi-rs-sign-out-alt flex items-center justify-center text-white"
-              style={{ fontSize: `${13 * scale}px` }}
-            />
-          </motion.button>
+          />
         )}
       </AnimatePresence>
     </div>

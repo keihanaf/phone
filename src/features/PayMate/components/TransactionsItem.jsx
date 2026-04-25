@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/shared/utils/cn.js';
+import Button from '@/shared/components/elements/Button.jsx';
 
 const transactionIconVariants = cva(
   'fi flex items-center justify-center ml-[2px] shrink-0',
@@ -177,44 +178,42 @@ export default function TransactionsItem({
                 }}
               >
                 {/* Reject Button */}
-                <button
+                <Button
+                  variant="iconButton"
                   onClick={(e) => {
                     e.stopPropagation();
                     onReject?.();
                   }}
-                  className="flex items-center justify-center bg-[#FF383C]/30 text-[#FF383C] hover:bg-[#FF383C]/40 transition-colors"
+                  icon="fi fi-rs-cross"
+                  iconClassName="text-[#FF383C]"
+                  iconStyle={{ fontSize: `${8 * scale}px` }}
+                  className="bg-[#FF383C]/30 hover:bg-[#FF383C]/40 transition-colors"
                   style={{
                     width: `${15 * scale}px`,
                     height: `${15 * scale}px`,
                     borderRadius: `${5 * scale}px`,
                   }}
                   aria-label="Reject bill"
-                >
-                  <i
-                    className="fi fi-rs-cross flex justify-center items-center"
-                    style={{ fontSize: `${8 * scale}px` }}
-                  />
-                </button>
+                />
 
                 {/* Accept Button */}
-                <button
+                <Button
+                  variant="iconButton"
                   onClick={(e) => {
                     e.stopPropagation();
                     onAccept?.();
                   }}
-                  className="flex items-center justify-center bg-[#34C759]/30 text-[#34C759] hover:bg-[#34C759]/40 transition-colors"
+                  icon="fi fi-rs-check"
+                  iconClassName="text-[#34C759]"
+                  iconStyle={{ fontSize: `${8 * scale}px` }}
+                  className="bg-[#34C759]/30 hover:bg-[#34C759]/40 transition-colors"
                   style={{
                     width: `${15 * scale}px`,
                     height: `${15 * scale}px`,
                     borderRadius: `${5 * scale}px`,
                   }}
                   aria-label="Accept bill"
-                >
-                  <i
-                    className="fi fi-rs-check flex justify-center items-center"
-                    style={{ fontSize: `${8 * scale}px` }}
-                  />
-                </button>
+                />
               </div>
             </div>
           )}

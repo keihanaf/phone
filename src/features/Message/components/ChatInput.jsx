@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/shared/utils/cn.js';
 import { EMOJIS } from '@/shared/constants/emojis';
+import Button from '@/shared/components/elements/Button.jsx';
 
 const MOCK_IMAGES = [
   'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=200&q=80',
@@ -168,9 +169,13 @@ const ChatInput = forwardRef(
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-[#FF383C]/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
-                  <i
-                    className="fi fi-ss-trash text-white flex items-center justify-center"
-                    style={{ fontSize: `${15 * scale}px` }}
+                  <Button
+                    variant="ghost"
+                    icon="fi-ss-trash"
+                    iconSize={`${15 * scale}px`}
+                    iconColor="#FFFFFF"
+                    className="pointer-events-none p-0!"
+                    aria-hidden="true"
                   />
                 </div>
               </div>
@@ -272,58 +277,55 @@ const ChatInput = forwardRef(
             className="flex items-center shrink-0"
             style={{ gap: `${8 * scale}px` }}
           >
-            <button
+            <Button
+              variant="ghost"
+              icon="fi-rs-mode-landscape"
+              iconSize={`${12 * scale}px`}
               onClick={toggleAttachmentPicker}
-              className={cn(
-                'flex items-center justify-center outline-none transition-colors',
+              className="p-0!"
+              iconClassName={cn(
+                'transition-colors',
                 isAttachmentOpen
                   ? 'text-white'
                   : 'text-white/50 hover:text-white/80'
               )}
-            >
-              <i
-                className="fi fi-rs-mode-landscape flex justify-center items-center"
-                style={{ fontSize: `${12 * scale}px` }}
-              />
-            </button>
+            />
 
-            <button
+            <Button
+              variant="ghost"
+              icon="fi-rs-meh"
+              iconSize={`${12 * scale}px`}
               onClick={toggleEmojiPicker}
-              className={cn(
-                'flex items-center justify-center outline-none transition-colors',
+              className="p-0!"
+              iconClassName={cn(
+                'transition-colors',
                 isEmojiOpen ? 'text-white' : 'text-white/50 hover:text-white/80'
               )}
-            >
-              <i
-                className="fi fi-rs-meh flex justify-center items-center"
-                style={{ fontSize: `${12 * scale}px` }}
-              />
-            </button>
+            />
           </div>
         </div>
 
-        <button
+        <Button
+          variant="iconButton"
+          icon="fi-rs-paper-plane"
+          iconSize={`${13 * scale}px`}
           className={cn(
-            'shrink-0 flex items-center justify-center border border-white/10 rounded-full outline-none transition-all duration-300',
+            'shrink-0 border border-white/10 rounded-full outline-none transition-all duration-300',
             isReadyToSend
               ? 'bg-[#315DFF]/80 hover:bg-[#315DFF] hover:scale-105 active:scale-95'
               : 'bg-[#313238]/65 cursor-default'
+          )}
+          iconClassName={cn(
+            'transition-all',
+            isReadyToSend
+              ? 'text-white hover:translate-x-0.5 hover:-translate-y-0.5'
+              : 'text-white/50'
           )}
           style={{
             width: `${34.67 * scale}px`,
             height: `${34.67 * scale}px`,
           }}
-        >
-          <i
-            className={cn(
-              'fi fi-rs-paper-plane flex items-center justify-center transition-all',
-              isReadyToSend
-                ? 'text-white hover:translate-x-0.5 hover:-translate-y-0.5'
-                : 'text-white/50'
-            )}
-            style={{ fontSize: `${13 * scale}px` }}
-          />
-        </button>
+        />
       </div>
     );
   }

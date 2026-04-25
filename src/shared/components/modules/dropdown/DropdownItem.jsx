@@ -1,5 +1,7 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { cn } from '@/shared/utils/cn.js';
+import Button from '@/shared/components/elements/Button.jsx';
 
 export default function DropdownItem({
   scale,
@@ -34,12 +36,13 @@ export default function DropdownItem({
 
       <div className="flex shrink-0 items-center">
         {(type === 'icon' || type === 'nav') && rightIcon && (
-          <i
-            className={cn('fi flex items-center justify-center', rightIcon)}
-            style={{
-              fontSize: `${10 * scale}px`,
-              color: rightIconColor || 'var(--color-muted)',
-            }}
+          <Button
+            variant="ghost"
+            icon={cn('fi', rightIcon)}
+            iconColor={rightIconColor || 'var(--color-muted)'}
+            iconSize={`${10 * scale}px`}
+            className="pointer-events-none p-0!"
+            aria-hidden="true"
           />
         )}
 

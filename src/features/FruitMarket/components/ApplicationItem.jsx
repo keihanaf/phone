@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/shared/utils/cn.js';
+import Button from '@/shared/components/elements/Button.jsx';
 
 const applicationItemVariants = cva(
   'flex items-center justify-between w-full bg-one',
@@ -49,6 +50,7 @@ export default function ApplicationItem({
             src={app.image}
             alt={app.name}
             className="w-full h-full object-cover"
+            loading="lazy"
           />
         </div>
 
@@ -101,13 +103,16 @@ export default function ApplicationItem({
         </div>
       </div>
 
-      {/* RIGHT BUTTON */}
-      <button
-        type="button"
+      <Button
+        variant="iconButton"
         onClick={() => onClick?.(app)}
+        icon={isDownload ? 'fi fi-rs-download' : 'fi fi-rs-cross'}
+        iconClassName={isDownload ? 'text-[#315DFF]' : 'text-[#FF375D]'}
+        iconStyle={{ fontSize: `${10 * scale}px` }}
         className={cn(
-          'flex items-center justify-center shrink-0 transition-all duration-200 active:scale-[0.95]',
-          isDownload ? 'bg-[#315DFF4D]' : 'bg-[#FF375D4D]'
+          isDownload
+            ? 'bg-[#315DFF]/30 hover:bg-[#315DFF]/40'
+            : 'bg-[#FF375D]/30 hover:bg-[#FF375D]/40'
         )}
         style={{
           width: `${20 * scale}px`,
@@ -115,19 +120,8 @@ export default function ApplicationItem({
           borderRadius: `${5 * scale}px`,
           padding: `${5 * scale}px`,
         }}
-      >
-        <i
-          className={cn(
-            'fi flex items-center justify-center',
-            isDownload
-              ? 'fi-rs-download text-[#315DFF]'
-              : 'fi-rs-cross text-[#FF375D]'
-          )}
-          style={{
-            fontSize: `${10 * scale}px`,
-          }}
-        />
-      </button>
+        aria-label={isDownload ? `Download ${app.name}` : `Remove ${app.name}`}
+      />
     </div>
   );
 }

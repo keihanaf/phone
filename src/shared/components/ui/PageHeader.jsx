@@ -1,23 +1,21 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/shared/utils/cn.js';
+import Button from '@/shared/components/elements/Button.jsx';
 
-// Define variants for the action buttons using cva
-const actionButtonVariants = cva(
-  'flex items-center justify-center cursor-pointer hover:opacity-90 active:scale-[0.95] transition-all z-10 shrink-0',
-  {
-    variants: {
-      variant: {
-        ghost: 'bg-transparent',
-        active: 'bg-six',
-        call: 'bg-[#315DFF]/30',
-      },
+const actionButtonVariants = cva('active:scale-[0.95] z-10', {
+  variants: {
+    variant: {
+      ghost: '',
+      active: 'bg-six hover:opacity-90',
+      call: 'bg-[#315DFF]/30 hover:opacity-90',
     },
-    defaultVariants: {
-      variant: 'ghost',
-    },
-  }
-);
+  },
+  defaultVariants: {
+    variant: 'ghost',
+  },
+});
 
 export default function PageHeader({
   scale = 1,
@@ -48,9 +46,13 @@ export default function PageHeader({
         className="flex items-center h-full z-10"
         style={{ gap: `${8 * scale}px` }}
       >
-        <button
+        <Button
+          variant="ghost"
           onClick={onLeftClick}
-          className={cn(actionButtonVariants({ variant: 'ghost' }))}
+          icon={cn('fi', leftIcon)}
+          iconClassName="text-muted"
+          iconSize={`${10 * scale}px`}
+          className="z-10"
           style={{
             width: `${25 * scale}px`,
             height: `${25 * scale}px`,
@@ -58,20 +60,11 @@ export default function PageHeader({
             padding: `${5 * scale}px`,
           }}
           aria-label="Go Back"
-        >
-          <i
-            className={cn(
-              'fi flex items-center justify-center text-muted',
-              leftIcon
-            )}
-            style={{ fontSize: `${10 * scale}px` }}
-          />
-        </button>
+        />
 
-        {/* Contact Profile (Rendered only if contact prop is provided) */}
+        {/* Contact Profile */}
         {contact && (
           <div className="flex items-center" style={{ gap: `${8 * scale}px` }}>
-            {/* Avatar */}
             <div
               className={cn(
                 'flex justify-center overflow-hidden relative shrink-0',
@@ -110,7 +103,6 @@ export default function PageHeader({
                 />
               )}
             </div>
-            {/* Contact Name */}
             <span
               className="font-bold whitespace-nowrap text-white truncate"
               style={{
@@ -124,7 +116,7 @@ export default function PageHeader({
         )}
       </div>
 
-      {/* Center Title (Rendered only if no contact is present) */}
+      {/* Center Title */}
       {title && !contact && (
         <span
           className={cn(
@@ -147,27 +139,22 @@ export default function PageHeader({
         style={{ width: `${25 * scale}px`, height: `${25 * scale}px` }}
       >
         {showRightButton && (
-          <button
+          <Button
+            variant={rightVariant === 'ghost' ? 'ghost' : undefined}
             onClick={onRightClick}
+            icon={cn('fi', rightIcon)}
+            iconClassName={rightIconColor}
+            iconSize={`${10 * scale}px`}
             className={cn(
               actionButtonVariants({ variant: rightVariant }),
-              'w-full h-full'
+              'w-full h-full flex items-center justify-center'
             )}
             style={{
               borderRadius: `${5 * scale}px`,
               padding: `${5 * scale}px`,
             }}
             aria-label="Primary Action"
-          >
-            <i
-              className={cn(
-                'fi flex items-center justify-center',
-                rightIcon,
-                rightIconColor
-              )}
-              style={{ fontSize: `${10 * scale}px` }}
-            />
-          </button>
+          />
         )}
       </div>
     </div>

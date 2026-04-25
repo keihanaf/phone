@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/shared/utils/cn.js';
 import { EMOJIS } from '@/shared/constants/emojis';
+import Button from '@/shared/components/elements/Button.jsx';
 
 const MOCK_IMAGES = [
   'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=200&q=80',
@@ -17,7 +18,7 @@ const MOCK_IMAGES = [
 // Styles
 // ---------------------------------------------------------------------------
 const containerVariants = cva(
-  'flex flex-col justify-center items-center bg-six border-border transition-all duration-300 ease-in-out relative z-50'
+  'flex flex-col justify-center items-center bg-six border-border transition-all duration-300 ease-in-out relative z-50 items-start'
 );
 
 // ---------------------------------------------------------------------------
@@ -135,7 +136,7 @@ export default function ActionPostBar({ scale = 1, onSubmit, rebleetContext }) {
 
   return (
     <div
-      className={cn(containerVariants(), 'items-start')}
+      className={containerVariants()}
       style={{
         width: `${260 * scale}px`,
         height: `${170 * scale}px`,
@@ -198,10 +199,7 @@ export default function ActionPostBar({ scale = 1, onSubmit, rebleetContext }) {
         </div>
       )}
 
-      {/* 
-        Rebleet Indicator 
-        Now placed exactly between the main container and the textarea container. 
-      */}
+      {/* Rebleet Indicator */}
       {rebleetContext && (
         <div
           className="w-full flex items-center shrink-0"
@@ -259,10 +257,10 @@ export default function ActionPostBar({ scale = 1, onSubmit, rebleetContext }) {
             }}
           >
             {EMOJIS.map((emoji, index) => (
-              <button
+              <Button
                 key={index}
                 onClick={() => handleEmojiClick(emoji)}
-                className="flex items-center justify-center outline-none hover:scale-110 transition-transform text-white"
+                className="hover:scale-110 transition-transform text-white"
                 style={{
                   fontSize: `${14 * scale}px`,
                   width: `${18 * scale}px`,
@@ -270,7 +268,7 @@ export default function ActionPostBar({ scale = 1, onSubmit, rebleetContext }) {
                 }}
               >
                 {emoji}
-              </button>
+              </Button>
             ))}
           </div>
         )}
@@ -291,10 +289,10 @@ export default function ActionPostBar({ scale = 1, onSubmit, rebleetContext }) {
             }}
           >
             {MOCK_IMAGES.map((imgSrc, index) => (
-              <button
+              <Button
                 key={index}
                 onClick={() => handleAttachmentClick(imgSrc)}
-                className="outline-none relative overflow-hidden flex items-center justify-center hover:opacity-80 transition-opacity bg-black/20"
+                className="relative overflow-hidden hover:opacity-80 transition-opacity bg-black/20"
                 style={{
                   width: `${92 * scale}px`,
                   height: `${58 * scale}px`,
@@ -306,7 +304,7 @@ export default function ActionPostBar({ scale = 1, onSubmit, rebleetContext }) {
                   alt={`attachment-${index}`}
                   className="w-full h-full object-cover"
                 />
-              </button>
+              </Button>
             ))}
           </div>
         )}
@@ -321,11 +319,14 @@ export default function ActionPostBar({ scale = 1, onSubmit, rebleetContext }) {
           }}
         >
           {/* Image Button */}
-          <button
-            type="button"
+          <Button
+            variant="iconButton"
             onClick={toggleAttachmentPicker}
+            icon="fi fi-rs-mode-landscape"
+            iconClassName="text-white"
+            iconStyle={{ fontSize: `${12 * scale}px` }}
             className={cn(
-              'flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200',
+              'active:scale-95 transition-all duration-200',
               !isAttachmentOpen && 'hover:brightness-110'
             )}
             style={{
@@ -336,19 +337,17 @@ export default function ActionPostBar({ scale = 1, onSubmit, rebleetContext }) {
                 ? '#315DFF'
                 : 'var(--color-bar)',
             }}
-          >
-            <i
-              className="fi fi-rs-mode-landscape flex items-center justify-center text-white"
-              style={{ fontSize: `${12 * scale}px` }}
-            />
-          </button>
+          />
 
           {/* Emoji Button */}
-          <button
-            type="button"
+          <Button
+            variant="iconButton"
             onClick={toggleEmojiPicker}
+            icon="fi fi-rs-meh"
+            iconClassName="text-white"
+            iconStyle={{ fontSize: `${12 * scale}px` }}
             className={cn(
-              'flex items-center justify-center cursor-pointer active:scale-95 transition-all duration-200',
+              'active:scale-95 transition-all duration-200',
               !isEmojiOpen && 'hover:brightness-110'
             )}
             style={{
@@ -357,31 +356,23 @@ export default function ActionPostBar({ scale = 1, onSubmit, rebleetContext }) {
               borderRadius: `${5 * scale}px`,
               backgroundColor: isEmojiOpen ? '#315DFF' : 'var(--color-bar)',
             }}
-          >
-            <i
-              className="fi fi-rs-meh flex items-center justify-center text-white"
-              style={{ fontSize: `${12 * scale}px` }}
-            />
-          </button>
+          />
 
           {/* Send Button */}
           {isReadyToSend && (
-            <button
-              type="button"
+            <Button
+              variant="iconButton"
               onClick={handleSubmit}
-              className="flex items-center justify-center cursor-pointer transition-all duration-200 hover:brightness-110 active:scale-95"
+              icon="fi fi-rs-paper-plane"
+              iconClassName="text-white"
+              iconStyle={{ fontSize: `${12 * scale}px` }}
+              className="hover:brightness-110 active:scale-95 bg-[#315DFF]"
               style={{
                 width: `${20 * scale}px`,
                 height: `${20 * scale}px`,
                 borderRadius: `${5 * scale}px`,
-                backgroundColor: '#315DFF',
               }}
-            >
-              <i
-                className="fi fi-rs-paper-plane flex items-center justify-center text-white"
-                style={{ fontSize: `${12 * scale}px` }}
-              />
-            </button>
+            />
           )}
         </div>
       </div>

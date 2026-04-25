@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/shared/utils/cn.js';
+import Button from '@/shared/components/elements/Button.jsx';
 
 const contactItemVariants = cva(
   'flex items-center justify-between w-full transition-colors duration-200 group',
@@ -183,10 +184,13 @@ export default function ContactItem({
             {call.time}
           </span>
         ) : (
-          <button
-            type="button"
+          <Button
+            variant="iconButton"
+            icon="fi fi-ss-comments"
+            iconClassName="text-muted"
+            iconStyle={{ fontSize: `${8 * scale}px` }}
             className={cn(
-              'flex items-center justify-center shrink-0 cursor-pointer active:scale-[0.95] transition-all duration-300 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto hover:opacity-80!',
+              'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto hover:opacity-80!',
               'bg-six'
             )}
             style={{
@@ -194,23 +198,17 @@ export default function ContactItem({
               height: `${15 * scale}px`,
               borderRadius: `${5 * scale}px`,
             }}
-          >
-            <i
-              className={cn(
-                'fi fi-ss-comments flex items-center justify-center text-muted'
-              )}
-              style={{
-                fontSize: `${8 * scale}px`,
-              }}
-            />
-          </button>
+            aria-label="Send message"
+          />
         )}
 
-        {/* Call Button  */}
-        <button
-          type="button"
+        <Button
+          variant="iconButton"
+          icon="fi fi-ss-phone-call"
+          iconClassName="text-[#315DFF]"
+          iconStyle={{ fontSize: `${8 * scale}px` }}
           className={cn(
-            'flex items-center justify-center shrink-0 cursor-pointer active:scale-[0.95] transition-all duration-300 hover:opacity-80!',
+            'hover:opacity-80!',
             !isHistory &&
               'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto',
             'bg-[#315DFF]/30'
@@ -220,18 +218,8 @@ export default function ContactItem({
             height: `${15 * scale}px`,
             borderRadius: `${5 * scale}px`,
           }}
-        >
-          {/* Call Icon - Custom blue color */}
-          <i
-            className={cn(
-              'fi fi-ss-phone-call flex items-center justify-center',
-              'text-[#315DFF]'
-            )}
-            style={{
-              fontSize: `${8 * scale}px`,
-            }}
-          />
-        </button>
+          aria-label="Call contact"
+        />
       </div>
     </div>
   );

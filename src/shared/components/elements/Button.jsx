@@ -8,21 +8,34 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: 'bg-transparent border-none',
         iconButton: 'hover:opacity-80 shrink-0',
+        ghost: 'bg-transparent hover:opacity-70 shrink-0',
       },
-    },
-    defaultVariants: {
-      variant: 'default',
     },
   }
 );
 
 const Button = forwardRef(
   (
-    { className, variant, icon, iconClassName, iconStyle, children, ...props },
+    {
+      className,
+      variant,
+      icon,
+      iconClassName,
+      iconStyle,
+      iconSize,
+      iconColor,
+      children,
+      ...props
+    },
     ref
   ) => {
+    const mergedIconStyle = {
+      ...(iconSize && { fontSize: iconSize }),
+      ...(iconColor && { color: iconColor }),
+      ...iconStyle,
+    };
+
     return (
       <button
         ref={ref}
@@ -36,7 +49,7 @@ const Button = forwardRef(
               icon,
               iconClassName
             )}
-            style={iconStyle}
+            style={mergedIconStyle}
           />
         )}
         {children}
@@ -47,10 +60,12 @@ const Button = forwardRef(
 
 Button.propTypes = {
   className: PropTypes.string,
-  variant: PropTypes.oneOf(['default', 'iconButton']),
+  variant: PropTypes.oneOf(['iconButton', 'ghost']),
   icon: PropTypes.string,
   iconClassName: PropTypes.string,
   iconStyle: PropTypes.object,
+  iconSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  iconColor: PropTypes.string,
   children: PropTypes.node,
 };
 
